@@ -4,16 +4,19 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Resultados Finales - Generador de Fútbol</title>
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<title>Centro Deportivo</title>
+
 
 <style>
 
 /* =========================================================
-   GENERAL
+   CONFIGURACIÓN GENERAL
 ========================================================= */
 
 * {
@@ -22,206 +25,133 @@
 
 html,
 body {
+
     margin: 0;
+
     padding: 0;
+
+    width: 100%;
+
+    min-height: 100%;
+
 }
 
 body {
-    padding: 30px;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #e9e9e9;
-}
 
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 
-/* =========================================================
-   BOTÓN INICIO
-========================================================= */
+    background:
 
-.boton-inicio {
-    display: block;
-    width: 100%;
-    max-width: 700px;
-    margin: 0 auto 20px auto;
-    padding: 14px 20px;
-    border: none;
-    border-radius: 10px;
-    background: #333;
+        radial-gradient(
+            circle at top left,
+            #183b70 0%,
+            #081525 35%,
+            #03070d 75%,
+            #000000 100%
+        );
+
     color: white;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    text-decoration: none;
-    text-align: center;
-}
 
-.boton-inicio:hover {
-    background: #111;
-}
+    min-height: 100vh;
 
-
-/* =========================================================
-   PANEL
-========================================================= */
-
-.panel {
-    max-width: 700px;
-    margin: 0 auto 40px auto;
-    padding: 30px;
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-}
-
-.panel h1 {
-    text-align: center;
-    margin: 0 0 25px 0;
-}
-
-.campo {
-    margin-bottom: 18px;
-}
-
-label {
-    display: block;
-    margin-bottom: 7px;
-    font-weight: bold;
-}
-
-input,
-select {
-    width: 100%;
-    padding: 13px;
-    font-size: 16px;
-    border: 1px solid #cccccc;
-    border-radius: 8px;
-    background: white;
-}
-
-.marcadores {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-}
-
-
-/* =========================================================
-   BOTONES
-========================================================= */
-
-button {
-    width: 100%;
-    padding: 16px;
-    border: none;
-    border-radius: 8px;
-    background: #111;
-    color: white;
-    font-size: 17px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 5px;
-}
-
-button:hover {
-    opacity: 0.9;
-}
-
-button:disabled {
-    opacity: 0.6;
-    cursor: wait;
-}
-
-.boton-exportar {
-    background: #168a3b;
-    margin-top: 15px;
-}
-
-
-/* =========================================================
-   CONTENEDOR RESULTADO
-========================================================= */
-
-.contenedor-resultado {
-    width: 100%;
     display: flex;
+
+    align-items: center;
+
     justify-content: center;
-    overflow: hidden;
+
+    padding: 30px;
+
+    overflow-x: hidden;
+
 }
 
 
 /* =========================================================
-   RESULTADO EXACTO 1080 x 1350
+   LUZ DECORATIVA SUPERIOR
 ========================================================= */
 
-#resultado {
+body::before {
 
-    width: 1080px;
-    height: 1350px;
+    content: "";
 
-    min-width: 1080px;
-    min-height: 1350px;
+    position: fixed;
 
-    max-width: 1080px;
-    max-height: 1350px;
+    width: 500px;
+
+    height: 500px;
+
+    top: -220px;
+
+    right: -180px;
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(0,119,255,0.35),
+            transparent 70%
+        );
+
+    filter: blur(20px);
+
+    pointer-events: none;
+
+}
+
+
+/* =========================================================
+   LUZ DECORATIVA INFERIOR
+========================================================= */
+
+body::after {
+
+    content: "";
+
+    position: fixed;
+
+    width: 450px;
+
+    height: 450px;
+
+    bottom: -220px;
+
+    left: -180px;
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(0,200,255,0.18),
+            transparent 70%
+        );
+
+    filter: blur(20px);
+
+    pointer-events: none;
+
+}
+
+
+/* =========================================================
+   CONTENEDOR PRINCIPAL
+========================================================= */
+
+.contenedor {
+
+    width: 100%;
+
+    max-width: 900px;
+
+    text-align: center;
 
     position: relative;
 
-    overflow: hidden;
+    z-index: 2;
 
-    color: white;
-
-    background: #111;
-
-    box-shadow:
-        0 10px 35px
-        rgba(0,0,0,0.25);
-}
-
-
-/* =========================================================
-   DEGRADADO
-========================================================= */
-
-#fondoDegradado {
-
-    position: absolute;
-
-    top: 0;
-    left: 0;
-
-    width: 1080px;
-    height: 310px;
-
-    display: block;
-
-    z-index: 0;
-
-    pointer-events: none;
-}
-
-
-/* =========================================================
-   PARTE SUPERIOR
-========================================================= */
-
-.parte-superior {
-
-    position: absolute;
-
-    top: 0;
-    left: 0;
-
-    width: 1080px;
-    height: 310px;
-
-    z-index: 10;
-
-    padding:
-        35px
-        50px
-        25px
-        50px;
-
-    background: transparent;
 }
 
 
@@ -229,129 +159,112 @@ button:disabled {
    ENCABEZADO
 ========================================================= */
 
-.encabezado {
+.logo {
 
-    display: flex;
+    margin-bottom: 50px;
 
-    justify-content: space-between;
-
-    align-items: flex-start;
-
-    height: 55px;
-
-    position: relative;
-
-    z-index: 20;
 }
 
 
-/* =========================================================
-   COMPETICIÓN
-========================================================= */
+.logo .balon {
 
-.nombre-pagina {
-
-    font-size: 29px;
-
-    font-weight: 900;
-
-    letter-spacing: -1px;
-
-    color: white;
-
-    text-shadow:
-        0 3px 10px
-        rgba(0,0,0,0.85);
-
-    text-transform: uppercase;
-
-    white-space: nowrap;
-
-    max-width: 650px;
-
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-}
-
-
-/* =========================================================
-   LOGO
-========================================================= */
-
-.datos-competicion {
-
-    text-align: right;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: flex-end;
-
-    gap: 10px;
-
-    white-space: nowrap;
-
-    width: 190px;
-
-    height: 55px;
-}
-
-.logo-pagina {
+    font-size: 70px;
 
     display: block;
 
-    width: auto;
-
-    height: 93.6px;
-
-    max-width: none;
-
-    max-height: 93.6px;
-
-    object-fit: contain;
-
-    object-position: center;
+    margin-bottom: 10px;
 
     filter:
+
         drop-shadow(
-            0 4px 9px
-            rgba(0,0,0,0.75)
+            0 8px 20px
+            rgba(0,0,0,0.6)
         );
+
+}
+
+
+.logo h1 {
+
+    margin: 0;
+
+    font-size: 48px;
+
+    font-weight: 900;
+
+    letter-spacing: -2px;
+
+    text-transform: uppercase;
+
+}
+
+
+.logo p {
+
+    margin: 12px 0 0;
+
+    color: #aebed1;
+
+    font-size: 17px;
+
+    letter-spacing: 1px;
+
 }
 
 
 /* =========================================================
-   DATOS PARTIDO
+   OPCIONES
 ========================================================= */
 
-.datos-partido {
+.opciones {
 
     display: grid;
 
     grid-template-columns:
-        1fr
-        300px
-        1fr;
+        repeat(2, 1fr);
 
-    align-items: center;
+    gap: 25px;
 
-    text-align: center;
-
-    margin-top: 15px;
-
-    position: relative;
-
-    height: 200px;
 }
 
 
 /* =========================================================
-   EQUIPOS
+   TARJETAS
 ========================================================= */
 
-.equipo {
+.opcion {
+
+    position: relative;
+
+    min-height: 260px;
+
+    padding: 35px 30px;
+
+    border-radius: 22px;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,0.12),
+            rgba(255,255,255,0.035)
+        );
+
+    border:
+
+        1px solid
+        rgba(255,255,255,0.14);
+
+    box-shadow:
+
+        0 20px 50px
+        rgba(0,0,0,0.35);
+
+    backdrop-filter:
+        blur(15px);
+
+    -webkit-backdrop-filter:
+        blur(15px);
 
     display: flex;
 
@@ -359,329 +272,228 @@ button:disabled {
 
     align-items: center;
 
-    justify-content: flex-end;
-
-    height: 200px;
-
-    position: relative;
-
-    overflow: visible;
-
-    min-width: 0;
-}
-
-
-/* =========================================================
-   ESCUDOS
-========================================================= */
-
-.escudo {
-
-    width: auto;
-
-    height: 168px;
-
-    max-width: 252px;
-
-    max-height: 168px;
-
-    min-width: 0;
-
-    min-height: 0;
-
-    object-fit: contain;
-
-    object-position: center;
-
-    display: none;
-
-    margin-bottom: 8px;
-
-    flex-shrink: 1;
-
-    filter:
-        drop-shadow(
-            0 7px 12px
-            rgba(0,0,0,0.75)
-        );
-}
-
-
-/* =========================================================
-   NOMBRES EQUIPOS
-========================================================= */
-
-.nombre-equipo {
-
-    font-size: 30px;
-
-    font-weight: 900;
-
-    line-height: 1.05;
-
-    text-transform: uppercase;
-
-    color: white;
-
-    text-shadow:
-        0 4px 15px
-        rgba(0,0,0,0.90);
-
-    white-space: nowrap;
-
-    flex-shrink: 0;
-
-    position: relative;
-
-    z-index: 20;
-}
-
-
-/* =========================================================
-   MARCADOR
-========================================================= */
-
-.marcador {
-
-    font-size: 150px;
-
-    font-weight: 900;
-
-    line-height: 0.85;
-
-    white-space: nowrap;
-
-    color: white;
-
-    text-shadow:
-        0 6px 25px
-        rgba(0,0,0,0.95);
-
-    position: relative;
-
-    top: -5px;
-
-    z-index: 20;
-
-    display: flex;
-
-    align-items: center;
-
     justify-content: center;
 
-    gap: 5px;
+    transition:
 
-    width: 300px;
+        transform 0.25s ease,
 
-    text-align: center;
-}
+        box-shadow 0.25s ease,
 
-.numero-marcador {
+        border-color 0.25s ease;
 
-    display: inline-block;
-
-    line-height: 0.85;
-
-    flex-shrink: 0;
-}
-
-.guion-marcador {
-
-    display: inline-block;
-
-    margin-left: 3px;
-
-    margin-right: 3px;
-
-    line-height: 0.85;
-
-    flex-shrink: 0;
 }
 
 
 /* =========================================================
-   ESTADO
+   TARJETA ACTIVA
 ========================================================= */
 
-.estado {
+.opcion.activa {
 
-    position: absolute;
+    cursor: pointer;
 
-    bottom: 8px;
+}
 
-    left: 540px;
+
+.opcion.activa:hover {
 
     transform:
-        translateX(-50%);
+        translateY(-8px);
 
-    padding:
-        7px
-        24px;
+    border-color:
+        rgba(30,145,255,0.65);
 
-    border:
-        2px solid
-        white;
+    box-shadow:
 
-    border-radius: 30px;
+        0 25px 60px
+        rgba(0,90,255,0.25);
 
-    font-size: 17px;
+}
+
+
+/* =========================================================
+   ICONOS
+========================================================= */
+
+.icono {
+
+    width: 90px;
+
+    height: 90px;
+
+    border-radius: 25px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 48px;
+
+    margin-bottom: 22px;
+
+}
+
+
+/* =========================================================
+   ICONO RESULTADOS
+========================================================= */
+
+.icono-resultados {
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #0875e8,
+            #043b78
+        );
+
+    box-shadow:
+
+        0 12px 30px
+        rgba(0,100,255,0.35);
+
+}
+
+
+/* =========================================================
+   ICONO DESVANECIDOS
+========================================================= */
+
+.icono-desvanecidos {
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #555555,
+            #202020
+        );
+
+    box-shadow:
+
+        0 12px 30px
+        rgba(0,0,0,0.35);
+
+    opacity: 0.9;
+
+}
+
+
+/* =========================================================
+   TITULOS
+========================================================= */
+
+.opcion h2 {
+
+    margin: 0 0 10px;
+
+    font-size: 25px;
 
     font-weight: 900;
 
     text-transform: uppercase;
 
-    white-space: nowrap;
-
-    color: white;
-
-    background:
-        rgba(0,0,0,0.32);
-
-    box-shadow:
-        0 4px 15px
-        rgba(0,0,0,0.55);
-
-    z-index: 30;
-
-    width: max-content;
-
-    text-align: center;
 }
 
 
 /* =========================================================
-   FOTO
+   DESCRIPCIÓN
 ========================================================= */
 
-.zona-foto {
+.opcion p {
+
+    margin: 0;
+
+    color: #aeb8c5;
+
+    font-size: 15px;
+
+    line-height: 1.5;
+
+}
+
+
+/* =========================================================
+   ETIQUETA
+========================================================= */
+
+.proximamente {
 
     position: absolute;
 
-    top: 310px;
-    left: 0;
+    top: 18px;
 
-    width: 1080px;
-    height: 1040px;
+    right: 18px;
 
-    overflow: hidden;
+    padding: 6px 12px;
 
-    background: #111;
+    border-radius: 20px;
 
-    z-index: 5;
-}
+    background:
 
-.foto-partido {
+        rgba(255,255,255,0.08);
 
-    position: absolute;
+    border:
 
-    top: 0;
-    left: 0;
+        1px solid
+        rgba(255,255,255,0.12);
 
-    width: 100%;
-    height: 100%;
+    color: #aeb8c5;
 
-    display: none;
-
-    object-fit: cover;
-
-    object-position: center center;
-
-    filter:
-        saturate(1.05)
-        contrast(1.05);
-
-    z-index: 2;
-}
-
-.sin-foto {
-
-    width: 1080px;
-    height: 1040px;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    color: white;
-
-    font-size: 35px;
+    font-size: 11px;
 
     font-weight: bold;
 
-    background: #111;
+    letter-spacing: 0.5px;
 
-    text-shadow:
-        0 3px 10px
-        rgba(0,0,0,0.8);
+    text-transform: uppercase;
+
 }
 
 
 /* =========================================================
-   EXPORTACIÓN
+   FLECHA
 ========================================================= */
 
-#zonaExportacion {
+.flecha {
 
-    position: fixed;
+    margin-top: 20px;
 
-    left: -15000px;
+    font-size: 22px;
 
-    top: 0;
+    color: #4da3ff;
 
-    width: 1080px;
+    transition:
+        transform 0.25s ease;
 
-    height: 1350px;
-
-    overflow: hidden;
-
-    background: #111;
-
-    z-index: 999999;
-
-    pointer-events: none;
 }
 
-#zonaExportacion #resultadoExportado {
 
-    width: 1080px !important;
+.opcion.activa:hover .flecha {
 
-    height: 1350px !important;
+    transform:
+        translateX(7px);
 
-    min-width: 1080px !important;
-
-    min-height: 1350px !important;
-
-    max-width: 1080px !important;
-
-    max-height: 1350px !important;
-
-    position: relative !important;
-
-    transform: none !important;
-
-    margin: 0 !important;
-
-    padding: 0 !important;
-
-    left: 0 !important;
-
-    top: 0 !important;
-
-    overflow: hidden !important;
-
-    box-shadow: none !important;
 }
 
 
 /* =========================================================
-   OCULTAR LOGO SOLAMENTE EN EXPORTACIÓN
+   PIE
 ========================================================= */
 
-#zonaExportacion .logo-pagina {
+.pie {
 
-    display: none !important;
+    margin-top: 40px;
+
+    color: #647386;
+
+    font-size: 12px;
+
+    letter-spacing: 0.5px;
 
 }
 
@@ -690,1983 +502,243 @@ button:disabled {
    RESPONSIVE
 ========================================================= */
 
-@media (max-width: 1100px) {
-
-    #resultado {
-
-        transform: scale(.7);
-
-        transform-origin:
-            top center;
-
-        margin-bottom: -405px;
-    }
-}
-
 @media (max-width: 700px) {
 
     body {
-        padding: 10px;
-    }
 
-    .panel {
         padding: 20px;
+
     }
 
-    .marcadores {
+
+    .logo {
+
+        margin-bottom: 35px;
+
+    }
+
+
+    .logo .balon {
+
+        font-size: 55px;
+
+    }
+
+
+    .logo h1 {
+
+        font-size: 32px;
+
+    }
+
+
+    .opciones {
+
         grid-template-columns: 1fr;
+
     }
 
-    #resultado {
 
-        transform: scale(.48);
+    .opcion {
 
-        transform-origin:
-            top center;
+        min-height: 230px;
 
-        margin-bottom: -702px;
     }
+
 }
 
 </style>
 
 </head>
 
+
 <body>
 
 
-<a
-    href="index.html"
-    class="boton-inicio"
->
-    ← VOLVER AL INICIO
-</a>
-
-
-<div class="panel">
-
-<h1>
-⚽ RESULTADOS FINALES
-</h1>
-
-
-<div class="campo">
-
-<label>
-Competición
-</label>
-
-<input
-    type="text"
-    id="competicionInput"
-    value="LA LIGA"
->
-
-</div>
-
-
-<div class="campo">
-
-<label>
-Jornada
-</label>
-
-<input
-    type="text"
-    id="jornadaInput"
-    value="JORNADA 2"
->
-
-</div>
-
-
-<div class="campo">
-
-<label>
-Equipo local
-</label>
-
-<input
-    type="text"
-    id="localInput"
-    value="REAL MADRID"
->
-
-</div>
-
-
-<div class="campo">
-
-<label>
-🛡️ Escudo equipo local
-</label>
-
-<input
-    type="file"
-    id="escudoLocalInput"
-    accept="image/png,image/jpeg,image/webp"
-    onchange="cargarEscudo(event,'local')"
->
-
-</div>
-
-
-<div class="campo">
-
-<label>
-Equipo visitante
-</label>
-
-<input
-    type="text"
-    id="visitanteInput"
-    value="BARCELONA"
->
-
-</div>
-
-
-<div class="campo">
-
-<label>
-🛡️ Escudo equipo visitante
-</label>
-
-<input
-    type="file"
-    id="escudoVisitanteInput"
-    accept="image/png,image/jpeg,image/webp"
-    onchange="cargarEscudo(event,'visitante')"
->
-
-</div>
-
-
-<div class="marcadores">
-
-<div class="campo">
-
-<label>
-Goles local
-</label>
-
-<input
-    type="number"
-    id="golesLocalInput"
-    value="2"
-    min="0"
->
-
-</div>
-
-
-<div class="campo">
-
-<label>
-Goles visitante
-</label>
-
-<input
-    type="number"
-    id="golesVisitanteInput"
-    value="1"
-    min="0"
->
-
-</div>
-
-</div>
-
-
-<div class="campo">
-
-<label>
-Estado
-</label>
-
-<input
-    type="text"
-    id="estadoInput"
-    value="FINALIZADO"
->
-
-</div>
-
-
-<div class="campo">
-
-<label>
-Página / Logo
-</label>
-
-<select id="paginaInput">
-
-<option value="sbm">
-SBM SPORTS
-</option>
-
-<option value="chica">
-CHICA SPORTS
-</option>
-
-<option value="fan">
-FAN TRICOLOR
-</option>
-
-</select>
-
-</div>
-
-
-<div class="campo">
-
-<label>
-📷 Fotografía del partido
-</label>
-
-<input
-    type="file"
-    id="fotoInput"
-    accept="image/*"
-    onchange="cargarFoto(event)"
->
-
-</div>
-
-
-<button
-    type="button"
-    onclick="generarResultado()"
->
-GENERAR RESULTADO
-</button>
-
-
-<button
-    type="button"
-    id="botonExportar"
-    class="boton-exportar"
-    onclick="exportarImagen()"
->
-🖼️ EXPORTAR IMAGEN PNG
-</button>
-
-</div>
-
-
 <!-- =========================================================
-     RESULTADO
+     CONTENEDOR PRINCIPAL
 ========================================================= -->
 
-<div class="contenedor-resultado">
-
-<div id="resultado">
+<div class="contenedor">
 
 
-<canvas
-    id="fondoDegradado"
-    width="1080"
-    height="310">
-</canvas>
+    <!-- =====================================================
+         ENCABEZADO
+    ====================================================== -->
+
+    <div class="logo">
+
+        <span class="balon">
+            ⚽
+        </span>
 
 
-<div class="parte-superior">
+        <h1>
+            CENTRO DEPORTIVO
+        </h1>
 
 
-<div class="encabezado">
+        <p>
+            Selecciona una herramienta para comenzar
+        </p>
+
+    </div>
 
 
-<div
-    class="nombre-pagina"
-    id="competicionResultado"
->
-LA LIGA | JORNADA 2
+
+    <!-- =====================================================
+         OPCIONES
+    ====================================================== -->
+
+    <div class="opciones">
+
+
+        <!-- =================================================
+             RESULTADOS DE FÚTBOL
+        ================================================== -->
+
+        <div
+            class="opcion activa"
+            onclick="abrirResultados()"
+        >
+
+            <div
+                class="icono icono-resultados"
+            >
+
+                ⚽
+
+            </div>
+
+
+            <h2>
+
+                Resultados de Fútbol
+
+            </h2>
+
+
+            <p>
+
+                Crea resultados deportivos,
+                agrega escudos, fotografías,
+                marcadores y exporta tus diseños.
+
+            </p>
+
+
+            <div class="flecha">
+
+                →
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             DESVANECIDOS
+        ================================================== -->
+
+        <div
+            class="opcion activa"
+            onclick="abrirDesvanecidos()"
+        >
+
+
+            <span class="proximamente">
+
+                NUEVO
+
+            </span>
+
+
+            <div
+                class="icono icono-desvanecidos"
+            >
+
+                ✨
+
+            </div>
+
+
+            <h2>
+
+                Desvanecidos
+
+            </h2>
+
+
+            <p>
+
+                Crea imágenes verticales con
+                un desvanecido elegante desde
+                negro hacia la fotografía.
+
+            </p>
+
+
+            <div class="flecha">
+
+                →
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         PIE
+    ====================================================== -->
+
+    <div class="pie">
+
+        Centro Deportivo · Panel principal
+
+    </div>
+
+
 </div>
 
-
-<div class="datos-competicion">
-
-<img
-    id="paginaLogoResultado"
-    class="logo-pagina"
-    src="SportsSBM.png"
-    alt="Sports SBM"
->
-
-</div>
-
-</div>
-
-
-<div class="datos-partido">
-
-
-<div class="equipo">
-
-<img
-    id="escudoLocalResultado"
-    class="escudo"
-    alt="Escudo local"
->
-
-<div
-    class="nombre-equipo"
-    id="localResultado"
->
-REAL MADRID
-</div>
-
-</div>
-
-
-<div class="marcador">
-
-<span
-    id="golesLocalResultado"
-    class="numero-marcador"
->
-2
-</span>
-
-<span class="guion-marcador">
--
-</span>
-
-<span
-    id="golesVisitanteResultado"
-    class="numero-marcador"
->
-1
-</span>
-
-</div>
-
-
-<div class="equipo">
-
-<img
-    id="escudoVisitanteResultado"
-    class="escudo"
-    alt="Escudo visitante"
->
-
-<div
-    class="nombre-equipo"
-    id="visitanteResultado"
->
-BARCELONA
-</div>
-
-</div>
-
-
-</div>
-
-
-<div
-    class="estado"
-    id="estadoResultado"
->
-FINALIZADO
-</div>
-
-
-</div>
-
-
-<div class="zona-foto">
-
-
-<div
-    class="sin-foto"
-    id="sinFoto"
->
-📷 AQUÍ APARECERÁ LA FOTO DEL PARTIDO
-</div>
-
-
-<img
-    id="fotoResultado"
-    class="foto-partido"
-    alt="Fotografía del partido"
->
-
-</div>
-
-
-</div>
-
-</div>
 
 
 <script>
 
 /* =========================================================
-   RUTAS DE LOS LOGOS
+   ABRIR RESULTADOS DE FÚTBOL
+   MISMA PESTAÑA
 ========================================================= */
 
-const logosPaginas = {
+function abrirResultados() {
 
-    sbm:
-        "SportsSBM.png",
-
-    chica:
-        "ChicaSports.png",
-
-    fan:
-        "FanTricolor.png"
-
-};
-
-
-/* =========================================================
-   COLORES
-========================================================= */
-
-const coloresTemas = {
-
-    sbm: {
-
-        exterior: "#0759b5",
-        exteriorClaro: "#0875e8",
-        exteriorOscuro: "#043b78"
-
-    },
-
-    chica: {
-
-        exterior: "#e83287",
-        exteriorClaro: "#ff4da0",
-        exteriorOscuro: "#941448"
-
-    },
-
-    fan: {
-
-        exterior: "#f2c300",
-        exteriorClaro: "#ffdf32",
-        exteriorOscuro: "#b38e00"
-
-    }
-
-};
-
-
-/* =========================================================
-   HEX A RGB
-========================================================= */
-
-function hexToRgb(hex) {
-
-    hex =
-        hex.replace("#","");
-
-    if(hex.length === 3) {
-
-        hex =
-            hex
-            .split("")
-            .map(c => c + c)
-            .join("");
-
-    }
-
-    const numero =
-        parseInt(hex,16);
-
-    return {
-
-        r:
-            (numero >> 16) & 255,
-
-        g:
-            (numero >> 8) & 255,
-
-        b:
-            numero & 255
-
-    };
+    window.location.href =
+        "resultados.html";
 
 }
 
 
 /* =========================================================
-   CAMBIAR LOGO
+   ABRIR DESVANECIDOS
+   MISMA PESTAÑA
 ========================================================= */
 
-function cambiarLogo(tema) {
+function abrirDesvanecidos() {
 
-    const logo =
-        document.getElementById(
-            "paginaLogoResultado"
-        );
-
-    if(!logo) {
-        return;
-    }
-
-    logo.src =
-        logosPaginas[tema];
+    window.location.href =
+        "desvanecidos.html";
 
 }
-
-
-/* =========================================================
-   DEGRADADO
-========================================================= */
-
-function dibujarDegradado(tema) {
-
-    const canvas =
-        document.getElementById(
-            "fondoDegradado"
-        );
-
-    if(!canvas) {
-        return;
-    }
-
-    const ctx =
-        canvas.getContext("2d");
-
-    const colores =
-        coloresTemas[tema];
-
-    const rgb =
-        hexToRgb(
-            colores.exterior
-        );
-
-    const rgbClaro =
-        hexToRgb(
-            colores.exteriorClaro
-        );
-
-    const rgbOscuro =
-        hexToRgb(
-            colores.exteriorOscuro
-        );
-
-
-    ctx.clearRect(
-        0,
-        0,
-        1080,
-        310
-    );
-
-
-    ctx.fillStyle =
-        colores.exterior;
-
-    ctx.fillRect(
-        0,
-        0,
-        1080,
-        310
-    );
-
-
-    /* AURA NEGRA */
-
-    const negroPrincipal =
-        ctx.createRadialGradient(
-            540,
-            145,
-            10,
-            540,
-            145,
-            700
-        );
-
-    negroPrincipal.addColorStop(
-        0,
-        "rgba(0,0,0,0.98)"
-    );
-
-    negroPrincipal.addColorStop(
-        0.20,
-        "rgba(0,0,0,0.94)"
-    );
-
-    negroPrincipal.addColorStop(
-        0.40,
-        "rgba(0,0,0,0.72)"
-    );
-
-    negroPrincipal.addColorStop(
-        0.60,
-        "rgba(0,0,0,0.40)"
-    );
-
-    negroPrincipal.addColorStop(
-        0.80,
-        "rgba(0,0,0,0.12)"
-    );
-
-    negroPrincipal.addColorStop(
-        1,
-        "rgba(0,0,0,0)"
-    );
-
-    ctx.fillStyle =
-        negroPrincipal;
-
-    ctx.fillRect(
-        0,
-        0,
-        1080,
-        310
-    );
-
-
-    /* CENTRO */
-
-    const centro =
-        ctx.createRadialGradient(
-            540,
-            145,
-            0,
-            540,
-            145,
-            420
-        );
-
-    centro.addColorStop(
-        0,
-        "rgba(0,0,0,0.70)"
-    );
-
-    centro.addColorStop(
-        0.35,
-        "rgba(0,0,0,0.40)"
-    );
-
-    centro.addColorStop(
-        0.70,
-        "rgba(0,0,0,0.08)"
-    );
-
-    centro.addColorStop(
-        1,
-        "rgba(0,0,0,0)"
-    );
-
-    ctx.fillStyle =
-        centro;
-
-    ctx.fillRect(
-        0,
-        0,
-        1080,
-        310
-    );
-
-
-    /* LUZ IZQUIERDA */
-
-    const izquierda =
-        ctx.createRadialGradient(
-            0,
-            155,
-            20,
-            0,
-            155,
-            450
-        );
-
-    izquierda.addColorStop(
-        0,
-        `rgba(${rgbClaro.r},${rgbClaro.g},${rgbClaro.b},0.34)`
-    );
-
-    izquierda.addColorStop(
-        0.35,
-        `rgba(${rgb.r},${rgb.g},${rgb.b},0.18)`
-    );
-
-    izquierda.addColorStop(
-        0.70,
-        `rgba(${rgbOscuro.r},${rgbOscuro.g},${rgbOscuro.b},0.06)`
-    );
-
-    izquierda.addColorStop(
-        1,
-        "rgba(0,0,0,0)"
-    );
-
-    ctx.fillStyle =
-        izquierda;
-
-    ctx.fillRect(
-        0,
-        0,
-        540,
-        310
-    );
-
-
-    /* LUZ DERECHA */
-
-    const derecha =
-        ctx.createRadialGradient(
-            1080,
-            155,
-            20,
-            1080,
-            155,
-            450
-        );
-
-    derecha.addColorStop(
-        0,
-        `rgba(${rgbClaro.r},${rgbClaro.g},${rgbClaro.b},0.34)`
-    );
-
-    derecha.addColorStop(
-        0.35,
-        `rgba(${rgb.r},${rgb.g},${rgb.b},0.18)`
-    );
-
-    derecha.addColorStop(
-        0.70,
-        `rgba(${rgbOscuro.r},${rgbOscuro.g},${rgbOscuro.b},0.06)`
-    );
-
-    derecha.addColorStop(
-        1,
-        "rgba(0,0,0,0)"
-    );
-
-    ctx.fillStyle =
-        derecha;
-
-    ctx.fillRect(
-        540,
-        0,
-        540,
-        310
-    );
-
-}
-
-
-/* =========================================================
-   CAMBIAR TEMA
-========================================================= */
-
-function cambiarTema(tema) {
-
-    cambiarLogo(tema);
-
-    dibujarDegradado(tema);
-
-}
-
-
-/* =========================================================
-   SELECT LOGO
-========================================================= */
-
-document
-    .getElementById("paginaInput")
-    .addEventListener(
-        "change",
-        function() {
-
-            cambiarTema(
-                this.value
-            );
-
-        }
-    );
-
-
-/* =========================================================
-   GENERAR RESULTADO
-========================================================= */
-
-function generarResultado() {
-
-    const competicion =
-        document.getElementById(
-            "competicionInput"
-        ).value;
-
-    const jornada =
-        document.getElementById(
-            "jornadaInput"
-        ).value;
-
-    const local =
-        document.getElementById(
-            "localInput"
-        ).value;
-
-    const visitante =
-        document.getElementById(
-            "visitanteInput"
-        ).value;
-
-    const golesLocal =
-        document.getElementById(
-            "golesLocalInput"
-        ).value;
-
-    const golesVisitante =
-        document.getElementById(
-            "golesVisitanteInput"
-        ).value;
-
-    const estado =
-        document.getElementById(
-            "estadoInput"
-        ).value;
-
-    const pagina =
-        document.getElementById(
-            "paginaInput"
-        ).value;
-
-
-    document.getElementById(
-        "competicionResultado"
-    ).innerText =
-        (
-            competicion +
-            " | " +
-            jornada
-        ).toUpperCase();
-
-
-    document.getElementById(
-        "localResultado"
-    ).innerText =
-        local.toUpperCase();
-
-
-    document.getElementById(
-        "visitanteResultado"
-    ).innerText =
-        visitante.toUpperCase();
-
-
-    document.getElementById(
-        "golesLocalResultado"
-    ).innerText =
-        golesLocal;
-
-
-    document.getElementById(
-        "golesVisitanteResultado"
-    ).innerText =
-        golesVisitante;
-
-
-    document.getElementById(
-        "estadoResultado"
-    ).innerText =
-        estado.toUpperCase();
-
-
-    cambiarTema(
-        pagina
-    );
-
-}
-
-
-/* =========================================================
-   CARGAR ESCUDO
-========================================================= */
-
-function cargarEscudo(event, equipo) {
-
-    const archivo =
-        event.target.files[0];
-
-    if(!archivo) {
-        return;
-    }
-
-    const lector =
-        new FileReader();
-
-    lector.onload =
-        function(e) {
-
-            let id;
-
-            if(equipo === "local") {
-
-                id =
-                    "escudoLocalResultado";
-
-            } else {
-
-                id =
-                    "escudoVisitanteResultado";
-
-            }
-
-
-            const escudo =
-                document.getElementById(id);
-
-
-            escudo.onload =
-                function() {
-
-                    escudo.style.display =
-                        "block";
-
-                };
-
-
-            escudo.src =
-                e.target.result;
-
-        };
-
-
-    lector.readAsDataURL(
-        archivo
-    );
-
-}
-
-
-/* =========================================================
-   CARGAR FOTO
-========================================================= */
-
-function cargarFoto(event) {
-
-    const archivo =
-        event.target.files[0];
-
-    if(!archivo) {
-        return;
-    }
-
-    const lector =
-        new FileReader();
-
-
-    lector.onload =
-        function(e) {
-
-            const foto =
-                document.getElementById(
-                    "fotoResultado"
-                );
-
-            const sinFoto =
-                document.getElementById(
-                    "sinFoto"
-                );
-
-
-            foto.onload =
-                function() {
-
-                    foto.style.display =
-                        "block";
-
-                    sinFoto.style.display =
-                        "none";
-
-                };
-
-
-            foto.src =
-                e.target.result;
-
-        };
-
-
-    lector.readAsDataURL(
-        archivo
-    );
-
-}
-
-
-/* =========================================================
-   CONVERTIR IMAGEN A DATA URL
-========================================================= */
-
-function imagenComoDataURL(img) {
-
-    return new Promise(
-        function(resolve, reject) {
-
-            if(
-                !img ||
-                !img.src
-            ) {
-
-                resolve(null);
-
-                return;
-
-            }
-
-
-            if(
-                img.src.startsWith("data:")
-            ) {
-
-                resolve(
-                    img.src
-                );
-
-                return;
-
-            }
-
-
-            const imagen =
-                new Image();
-
-
-            imagen.crossOrigin =
-                "anonymous";
-
-
-            imagen.onload =
-                function() {
-
-                    try {
-
-                        const canvas =
-                            document.createElement(
-                                "canvas"
-                            );
-
-
-                        canvas.width =
-                            imagen.naturalWidth;
-
-
-                        canvas.height =
-                            imagen.naturalHeight;
-
-
-                        const ctx =
-                            canvas.getContext(
-                                "2d"
-                            );
-
-
-                        ctx.drawImage(
-                            imagen,
-                            0,
-                            0
-                        );
-
-
-                        const dataURL =
-                            canvas.toDataURL(
-                                "image/png"
-                            );
-
-
-                        resolve(
-                            dataURL
-                        );
-
-                    }
-                    catch(error) {
-
-                        reject(error);
-
-                    }
-
-                };
-
-
-            imagen.onerror =
-                function() {
-
-                    reject(
-                        new Error(
-                            "No se pudo cargar la imagen: " +
-                            img.src
-                        )
-                    );
-
-                };
-
-
-            imagen.src =
-                img.src;
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   ESPERAR IMÁGENES
-========================================================= */
-
-function esperarImagenes(elemento) {
-
-    const imagenes =
-        elemento.querySelectorAll("img");
-
-
-    const promesas = [];
-
-
-    imagenes.forEach(
-        function(img) {
-
-            if(
-                img.style.display === "none"
-            ) {
-
-                return;
-
-            }
-
-
-            if(
-                img.complete &&
-                img.naturalWidth > 0
-            ) {
-
-                return;
-
-            }
-
-
-            promesas.push(
-
-                new Promise(
-                    function(resolve) {
-
-                        const terminar =
-                            function() {
-
-                                resolve();
-
-                            };
-
-
-                        img.addEventListener(
-                            "load",
-                            terminar,
-                            {
-                                once: true
-                            }
-                        );
-
-
-                        img.addEventListener(
-                            "error",
-                            terminar,
-                            {
-                                once: true
-                            }
-                        );
-
-
-                        setTimeout(
-                            resolve,
-                            5000
-                        );
-
-                    }
-                )
-
-            );
-
-        }
-    );
-
-
-    return Promise.all(
-        promesas
-    );
-
-}
-
-
-/* =========================================================
-   CREAR CLON PARA EXPORTACIÓN
-========================================================= */
-
-async function crearZonaExportacion() {
-
-    const anterior =
-        document.getElementById(
-            "zonaExportacion"
-        );
-
-    if(anterior) {
-        anterior.remove();
-    }
-
-
-    const zona =
-        document.createElement("div");
-
-    zona.id =
-        "zonaExportacion";
-
-
-    const original =
-        document.getElementById(
-            "resultado"
-        );
-
-
-    const clon =
-        original.cloneNode(true);
-
-
-    clon.id =
-        "resultadoExportado";
-
-
-    zona.appendChild(
-        clon
-    );
-
-
-    document.body.appendChild(
-        zona
-    );
-
-
-    /* =====================================================
-       CANVAS DEGRADADO
-    ===================================================== */
-
-    const canvasOriginal =
-        document.getElementById(
-            "fondoDegradado"
-        );
-
-    const canvasClonado =
-        clon.querySelector(
-            "#fondoDegradado"
-        );
-
-
-    if(
-        canvasOriginal &&
-        canvasClonado
-    ) {
-
-        canvasClonado.width =
-            1080;
-
-        canvasClonado.height =
-            310;
-
-        canvasClonado.style.width =
-            "1080px";
-
-        canvasClonado.style.height =
-            "310px";
-
-
-        const ctx =
-            canvasClonado.getContext(
-                "2d"
-            );
-
-
-        ctx.clearRect(
-            0,
-            0,
-            1080,
-            310
-        );
-
-
-        ctx.drawImage(
-            canvasOriginal,
-            0,
-            0,
-            1080,
-            310
-        );
-
-    }
-
-
-    /* =====================================================
-       COPIAR IMÁGENES
-    ===================================================== */
-
-    const imagenesOriginal =
-        original.querySelectorAll("img");
-
-    const imagenesClon =
-        clon.querySelectorAll("img");
-
-
-    for(
-        let index = 0;
-        index < imagenesOriginal.length;
-        index++
-    ) {
-
-        const imgOriginal =
-            imagenesOriginal[index];
-
-        const imgClon =
-            imagenesClon[index];
-
-
-        if(!imgClon) {
-            continue;
-        }
-
-
-        imgClon.style.display =
-            imgOriginal.style.display;
-
-
-        imgClon.style.width =
-            imgOriginal.style.width;
-
-
-        imgClon.style.height =
-            imgOriginal.style.height;
-
-
-        imgClon.style.objectFit =
-            imgOriginal.style.objectFit;
-
-
-        imgClon.style.objectPosition =
-            imgOriginal.style.objectPosition;
-
-
-        try {
-
-            const dataURL =
-                await imagenComoDataURL(
-                    imgOriginal
-                );
-
-
-            if(dataURL) {
-
-                imgClon.src =
-                    dataURL;
-
-            }
-
-        }
-        catch(error) {
-
-            console.warn(
-                "No se pudo convertir la imagen:",
-                imgOriginal.src,
-                error
-            );
-
-
-            imgClon.src =
-                imgOriginal.src;
-
-        }
-
-    }
-
-
-    /* =====================================================
-       QUITAR LOGO DE LA EXPORTACIÓN
-    ===================================================== */
-
-    const logo =
-        clon.querySelector(
-            ".logo-pagina"
-        );
-
-
-    if(logo) {
-
-        logo.remove();
-
-    }
-
-
-    /* =====================================================
-       FOTO
-    ===================================================== */
-
-    const foto =
-        clon.querySelector(
-            ".foto-partido"
-        );
-
-
-    if(foto) {
-
-        foto.style.width =
-            "1080px";
-
-        foto.style.height =
-            "1040px";
-
-        foto.style.objectFit =
-            "cover";
-
-        foto.style.objectPosition =
-            "center center";
-
-    }
-
-
-    /* =====================================================
-       ESCUDOS
-    ===================================================== */
-
-    const escudos =
-        clon.querySelectorAll(
-            ".escudo"
-        );
-
-
-    escudos.forEach(
-        function(escudo) {
-
-            escudo.style.width =
-                "auto";
-
-            escudo.style.height =
-                "168px";
-
-            escudo.style.maxWidth =
-                "252px";
-
-            escudo.style.maxHeight =
-                "168px";
-
-            escudo.style.objectFit =
-                "contain";
-
-        }
-    );
-
-
-    /* =====================================================
-       ZONA FOTO
-    ===================================================== */
-
-    const zonaFoto =
-        clon.querySelector(
-            ".zona-foto"
-        );
-
-
-    if(zonaFoto) {
-
-        zonaFoto.style.width =
-            "1080px";
-
-        zonaFoto.style.height =
-            "1040px";
-
-        zonaFoto.style.top =
-            "310px";
-
-    }
-
-
-    return zona;
-
-}
-
-
-/* =========================================================
-   EXPORTAR IMAGEN
-========================================================= */
-
-async function exportarImagen() {
-
-    const boton =
-        document.getElementById(
-            "botonExportar"
-        );
-
-
-    if(
-        typeof html2canvas ===
-        "undefined"
-    ) {
-
-        alert(
-            "No se pudo cargar html2canvas."
-        );
-
-        return;
-
-    }
-
-
-    boton.disabled =
-        true;
-
-    boton.innerText =
-        "⏳ PREPARANDO IMAGEN...";
-
-
-    let zona =
-        null;
-
-
-    try {
-
-        /* =================================================
-           CREAR CLON
-        ================================================= */
-
-        zona =
-            await crearZonaExportacion();
-
-
-        /* =================================================
-           ESPERAR IMÁGENES
-        ================================================= */
-
-        await esperarImagenes(
-            zona
-        );
-
-
-        /* =================================================
-           ESPERAR RENDERIZADO
-        ================================================= */
-
-        await new Promise(
-            function(resolve) {
-
-                requestAnimationFrame(
-                    function() {
-
-                        requestAnimationFrame(
-                            function() {
-
-                                setTimeout(
-                                    resolve,
-                                    500
-                                );
-
-                            }
-                        );
-
-                    }
-                );
-
-            }
-        );
-
-
-        boton.innerText =
-            "⏳ GENERANDO PNG...";
-
-
-        const elemento =
-            document.getElementById(
-                "resultadoExportado"
-            );
-
-
-        if(!elemento) {
-
-            throw new Error(
-                "No se encontró resultadoExportado."
-            );
-
-        }
-
-
-        /* =================================================
-           HTML2CANVAS
-        ================================================= */
-
-        const canvas =
-            await html2canvas(
-                elemento,
-                {
-
-                    width:
-                        1080,
-
-                    height:
-                        1350,
-
-                    scale:
-                        1,
-
-                    useCORS:
-                        true,
-
-                    allowTaint:
-                        false,
-
-                    backgroundColor:
-                        "#111111",
-
-                    logging:
-                        false,
-
-                    imageTimeout:
-                        20000,
-
-                    foreignObjectRendering:
-                        false,
-
-                    removeContainer:
-                        true,
-
-                    scrollX:
-                        0,
-
-                    scrollY:
-                        0,
-
-                    windowWidth:
-                        1080,
-
-                    windowHeight:
-                        1350
-
-                }
-            );
-
-
-        if(!canvas) {
-
-            throw new Error(
-                "html2canvas no generó la imagen."
-            );
-
-        }
-
-
-        /* =================================================
-           CANVAS FINAL
-        ================================================= */
-
-        const canvasFinal =
-            document.createElement(
-                "canvas"
-            );
-
-
-        canvasFinal.width =
-            1080;
-
-        canvasFinal.height =
-            1350;
-
-
-        const ctx =
-            canvasFinal.getContext(
-                "2d"
-            );
-
-
-        ctx.fillStyle =
-            "#111111";
-
-
-        ctx.fillRect(
-            0,
-            0,
-            1080,
-            1350
-        );
-
-
-        ctx.drawImage(
-            canvas,
-            0,
-            0,
-            1080,
-            1350
-        );
-
-
-        /* =================================================
-           CREAR PNG
-        ================================================= */
-
-        boton.innerText =
-            "⏳ PREPARANDO PNG...";
-
-
-        const blob =
-            await new Promise(
-                function(resolve,reject) {
-
-                    canvasFinal.toBlob(
-                        function(blob) {
-
-                            if(blob) {
-
-                                resolve(
-                                    blob
-                                );
-
-                            }
-                            else {
-
-                                reject(
-                                    new Error(
-                                        "El navegador no pudo crear el PNG."
-                                    )
-                                );
-
-                            }
-
-                        },
-                        "image/png"
-                    );
-
-                }
-            );
-
-
-        if(!blob) {
-
-            throw new Error(
-                "No se pudo generar el archivo PNG."
-            );
-
-        }
-
-
-        /* =================================================
-           COMPARTIR / GUARDAR
-        ================================================= */
-
-        const nombreArchivo =
-            "resultado-final-1080x1350.png";
-
-
-        const archivo =
-            new File(
-                [blob],
-                nombreArchivo,
-                {
-                    type:
-                        "image/png"
-                }
-            );
-
-
-        /*
-           iPhone / iPad / navegadores
-           compatibles con compartir archivos
-        */
-
-        if(
-            navigator.share &&
-            navigator.canShare &&
-            navigator.canShare({
-                files: [archivo]
-            })
-        ) {
-
-            boton.innerText =
-                "📤 ABRIENDO OPCIONES...";
-
-
-            try {
-
-                await navigator.share({
-
-                    files:
-                        [archivo],
-
-                    title:
-                        "Resultado final"
-
-                });
-
-
-                boton.innerText =
-                    "✅ IMAGEN LISTA";
-
-            }
-
-            catch(error) {
-
-                /*
-                   Si el usuario simplemente
-                   cierra el menú de compartir,
-                   no mostramos ningún error.
-                */
-
-                if(
-                    error.name !==
-                    "AbortError"
-                ) {
-
-                    console.error(
-                        "Error al compartir:",
-                        error
-                    );
-
-                    throw error;
-
-                }
-
-
-                boton.innerText =
-                    "🖼️ EXPORTAR IMAGEN PNG";
-
-            }
-
-        }
-
-
-        /*
-           PC / Android / navegadores
-           que no soporten compartir archivos
-        */
-
-        else {
-
-            const url =
-                URL.createObjectURL(
-                    blob
-                );
-
-
-            const enlace =
-                document.createElement(
-                    "a"
-                );
-
-
-            enlace.href =
-                url;
-
-
-            enlace.download =
-                nombreArchivo;
-
-
-            enlace.style.display =
-                "none";
-
-
-            document.body.appendChild(
-                enlace
-            );
-
-
-            enlace.click();
-
-
-            setTimeout(
-                function() {
-
-                    enlace.remove();
-
-                    URL.revokeObjectURL(
-                        url
-                    );
-
-                },
-                1500
-            );
-
-
-            boton.innerText =
-                "✅ IMAGEN GUARDADA";
-
-
-            setTimeout(
-                function() {
-
-                    boton.innerText =
-                        "🖼️ EXPORTAR IMAGEN PNG";
-
-                },
-                2500
-            );
-
-        }
-
-    }
-
-    catch(error) {
-
-        console.error(
-            "ERROR AL EXPORTAR:",
-            error
-        );
-
-
-        alert(
-            "NO SE PUDO EXPORTAR LA IMAGEN.\n\n" +
-            (
-                error.message ||
-                error
-            )
-        );
-
-
-        boton.innerText =
-            "🖼️ EXPORTAR IMAGEN PNG";
-
-    }
-
-    finally {
-
-        boton.disabled =
-            false;
-
-
-        if(zona) {
-
-            setTimeout(
-                function() {
-
-                    if(
-                        zona &&
-                        zona.parentNode
-                    ) {
-
-                        zona.remove();
-
-                    }
-
-                },
-                500
-            );
-
-        }
-
-    }
-
-}
-
-
-/* =========================================================
-   INICIO
-========================================================= */
-
-dibujarDegradado("sbm");
-
-cambiarLogo("sbm");
-
-generarResultado();
 
 </script>
 
+
 </body>
+
 </html>

@@ -2403,7 +2403,7 @@ async function exportarImagen() {
         ================================================= */
 
         boton.innerText =
-            "⏳ GUARDANDO PNG...";
+            "⏳ PREPARANDO PNG...";
 
 
         const blob =
@@ -2448,72 +2448,158 @@ async function exportarImagen() {
 
 
         /* =================================================
-           DESCARGA
+           COMPARTIR / GUARDAR
         ================================================= */
 
-        const url =
-            URL.createObjectURL(
-                blob
-            );
-
-
-        const enlace =
-            document.createElement(
-                "a"
-            );
-
-
-        enlace.href =
-            url;
-
-
-        enlace.download =
+        const nombreArchivo =
             "resultado-final-1080x1350.png";
 
 
-        enlace.style.display =
-            "none";
+        const archivo =
+            new File(
+                [blob],
+                nombreArchivo,
+                {
+                    type:
+                        "image/png"
+                }
+            );
 
 
-        document.body.appendChild(
-            enlace
-        );
+        /*
+           iPhone / iPad / navegadores
+           compatibles con compartir archivos
+        */
+
+        if(
+            navigator.share &&
+            navigator.canShare &&
+            navigator.canShare({
+                files: [archivo]
+            })
+        ) {
+
+            boton.innerText =
+                "📤 ABRIENDO OPCIONES...";
 
 
-        enlace.click();
+            try {
+
+                await navigator.share({
+
+                    files:
+                        [archivo],
+
+                    title:
+                        "Resultado final"
+
+                });
 
 
-        setTimeout(
-            function() {
+                boton.innerText =
+                    "✅ IMAGEN LISTA";
 
-                enlace.remove();
+            }
 
-                URL.revokeObjectURL(
-                    url
-                );
+            catch(error) {
 
-            },
-            1500
-        );
+                /*
+                   Si el usuario simplemente
+                   cierra el menú de compartir,
+                   no mostramos ningún error.
+                */
 
+                if(
+                    error.name !==
+                    "AbortError"
+                ) {
 
-        /* =================================================
-           ÉXITO
-        ================================================= */
+                    console.error(
+                        "Error al compartir:",
+                        error
+                    );
 
-        boton.innerText =
-            "✅ IMAGEN GUARDADA";
+                    throw error;
 
+                }
 
-        setTimeout(
-            function() {
 
                 boton.innerText =
                     "🖼️ EXPORTAR IMAGEN PNG";
 
-            },
-            2500
-        );
+            }
+
+        }
+
+
+        /*
+           PC / Android / navegadores
+           que no soporten compartir archivos
+        */
+
+        else {
+
+            const url =
+                URL.createObjectURL(
+                    blob
+                );
+
+
+            const enlace =
+                document.createElement(
+                    "a"
+                );
+
+
+            enlace.href =
+                url;
+
+
+            enlace.download =
+                nombreArchivo;
+
+
+            enlace.style.display =
+                "none";
+
+
+            document.body.appendChild(
+                enlace
+            );
+
+
+            enlace.click();
+
+
+            setTimeout(
+                function() {
+
+                    enlace.remove();
+
+                    URL.revokeObjectURL(
+                        url
+                    );
+
+                },
+                1500
+            );
+
+
+            boton.innerText =
+                "✅ IMAGEN GUARDADA";
+
+
+            setTimeout(
+                function() {
+
+                    boton.innerText =
+                        "🖼️ EXPORTAR IMAGEN PNG";
+
+                },
+                2500
+            );
+
+        }
 
     }
 

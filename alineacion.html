@@ -1,0 +1,2901 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Generador de Alineaciones</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#080b10;
+    color:#fff;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.topbar{
+    background:#11151c;
+    border-bottom:1px solid #292e38;
+    padding:22px;
+    text-align:center;
+    position:relative;
+}
+
+.topbar h1{
+    margin:0;
+    font-size:28px;
+}
+
+.topbar p{
+    margin:8px 0 0;
+    color:#8f98a8;
+}
+
+
+/* =========================================
+   BOTÓN VOLVER AL INICIO
+========================================= */
+
+.btn-inicio{
+
+    position:absolute;
+
+    left:22px;
+
+    top:20px;
+
+    width:auto;
+
+    margin:0;
+
+    padding:10px 18px;
+
+    background:#1c2430;
+
+    border:1px solid #343d4b;
+
+    border-radius:10px;
+
+    color:#fff;
+
+    font-size:13px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.btn-inicio:hover{
+
+    background:#3478ff;
+
+    border-color:#3478ff;
+
+    transform:translateX(-3px);
+
+    box-shadow:
+        0 8px 20px
+        rgba(52,120,255,.25);
+
+}
+
+
+/* =========================================
+   APP
+========================================= */
+
+.app{
+    max-width:1400px;
+    margin:auto;
+    padding:25px;
+    display:grid;
+    grid-template-columns:360px 1fr;
+    gap:35px;
+}
+
+
+/* =========================================
+   PANEL
+========================================= */
+
+.panel{
+    background:#151a22;
+    border:1px solid #272d38;
+    border-radius:20px;
+    padding:22px;
+    height:max-content;
+    box-shadow:0 20px 60px rgba(0,0,0,.35);
+}
+
+.panel h2{
+    margin:0 0 20px;
+}
+
+.section-title{
+    margin-top:25px;
+    margin-bottom:10px;
+    font-size:12px;
+    font-weight:bold;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    color:#7e899c;
+}
+
+
+/* =========================================
+   INPUTS
+========================================= */
+
+label{
+    display:block;
+    margin-top:13px;
+    margin-bottom:6px;
+    color:#b7c0cf;
+    font-size:13px;
+}
+
+input,
+select{
+    width:100%;
+    padding:11px 12px;
+    background:#0d1117;
+    border:1px solid #303743;
+    border-radius:10px;
+    color:#fff;
+    outline:none;
+}
+
+input:focus,
+select:focus{
+    border-color:#3478ff;
+}
+
+
+/* =========================================
+   TEMAS
+========================================= */
+
+.themes{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:7px;
+}
+
+.theme{
+    border:1px solid #343b48;
+    background:#0d1117;
+    border-radius:10px;
+    padding:9px 4px;
+    text-align:center;
+    cursor:pointer;
+    font-size:11px;
+    transition:.2s;
+}
+
+.theme:hover{
+    transform:translateY(-2px);
+}
+
+.theme.active{
+    border-color:#fff;
+}
+
+.theme-color{
+    width:100%;
+    height:8px;
+    border-radius:10px;
+    margin-bottom:7px;
+}
+
+.blue{
+    background:linear-gradient(
+        90deg,
+        #1477ff,
+        #003caa
+    );
+}
+
+.pink{
+    background:linear-gradient(
+        90deg,
+        #ff4f9a,
+        #9e1257
+    );
+}
+
+.yellow{
+    background:linear-gradient(
+        90deg,
+        #ffe600,
+        #d19c00
+    );
+}
+
+
+/* =========================================
+   LOGOS
+========================================= */
+
+.logo-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.logo-box{
+    border:1px dashed #3b4350;
+    border-radius:10px;
+    padding:10px;
+    text-align:center;
+}
+
+.logo-preview{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:8px;
+}
+
+.logo-preview img{
+    max-width:100%;
+    max-height:65px;
+    object-fit:contain;
+}
+
+.logo-placeholder{
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    background:#252b34;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#7f8999;
+    font-size:22px;
+}
+
+
+/* =========================================
+   JUGADORES
+========================================= */
+
+.players{
+    margin-top:10px;
+}
+
+.player-row{
+    background:#0d1117;
+    border:1px solid #292f39;
+    border-radius:12px;
+    padding:10px;
+    margin-bottom:9px;
+}
+
+.player-top{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:8px;
+}
+
+.player-number{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    background:#202631;
+    border:1px solid #394252;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:12px;
+    font-weight:bold;
+    color:#8fa0b8;
+}
+
+.player-position{
+    font-size:11px;
+    font-weight:bold;
+    color:#7f8da1;
+    letter-spacing:.5px;
+}
+
+.player-row input[type="text"]{
+    margin-top:0;
+}
+
+.player-photo-label{
+    display:block;
+    background:#171d26;
+    border:1px dashed #3b4555;
+    border-radius:9px;
+    padding:8px;
+    text-align:center;
+    font-size:11px;
+    color:#9ca8b9;
+    cursor:pointer;
+    margin-top:8px;
+    transition:.2s;
+}
+
+.player-photo-label:hover{
+    border-color:#4285ff;
+    color:#fff;
+}
+
+.player-photo-label input{
+    display:none;
+}
+
+
+/* =========================================
+   BOTONES
+========================================= */
+
+button{
+    width:100%;
+    border:0;
+    border-radius:11px;
+    padding:14px;
+    margin-top:10px;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:bold;
+    transition:.2s;
+}
+
+.btn-download{
+    background:#fff;
+    color:#080b10;
+}
+
+.btn-download:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px rgba(255,255,255,.15);
+}
+
+.btn-reset{
+    background:#272e39;
+    color:#fff;
+}
+
+
+/* =========================================
+   PREVIEW
+========================================= */
+
+.preview{
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+}
+
+canvas{
+    width:min(100%,650px);
+    height:auto;
+    aspect-ratio:4/5;
+    border-radius:12px;
+    box-shadow:0 30px 80px rgba(0,0,0,.6);
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media(max-width:900px){
+
+    .app{
+        grid-template-columns:1fr;
+    }
+
+    .panel{
+        order:2;
+    }
+
+    .preview{
+        order:1;
+    }
+
+    .btn-inicio{
+
+        position:relative;
+
+        left:auto;
+
+        top:auto;
+
+        display:block;
+
+        margin:0 auto 15px;
+
+    }
+
+}
+
+
+/* =========================================
+   RESPONSIVE PEQUEÑO
+========================================= */
+
+@media(max-width:600px){
+
+    .topbar{
+        padding:18px 15px 22px;
+    }
+
+    .topbar h1{
+        font-size:23px;
+    }
+
+    .topbar p{
+        font-size:13px;
+    }
+
+    .btn-inicio{
+        font-size:12px;
+        padding:9px 15px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<!-- =========================================
+     HEADER
+========================================= -->
+
+<div class="topbar">
+
+
+    <!-- BOTÓN VOLVER -->
+
+    <button
+        class="btn-inicio"
+        onclick="volverInicio()"
+    >
+
+        ← Volver al inicio
+
+    </button>
+
+
+    <h1>
+        ⚽ Generador de Alineaciones
+    </h1>
+
+
+    <p>
+        Crea alineaciones deportivas para tus páginas
+    </p>
+
+</div>
+
+
+
+<div class="app">
+
+
+<!-- =========================================
+     PANEL
+========================================= -->
+
+<div class="panel">
+
+    <h2>
+        Diseña tu alineación
+    </h2>
+
+
+    <!-- TEMAS -->
+
+    <div class="section-title">
+        Identidad de la página
+    </div>
+
+
+    <div class="themes">
+
+        <div
+        class="theme active"
+        onclick="setTheme('blue',this)">
+
+            <div class="theme-color blue"></div>
+
+            Sports SBM
+
+        </div>
+
+
+        <div
+        class="theme"
+        onclick="setTheme('pink',this)">
+
+            <div class="theme-color pink"></div>
+
+            Chica Sports
+
+        </div>
+
+
+        <div
+        class="theme"
+        onclick="setTheme('yellow',this)">
+
+            <div class="theme-color yellow"></div>
+
+            Fan Tricolor
+
+        </div>
+
+    </div>
+
+
+    <!-- INFORMACIÓN -->
+
+    <div class="section-title">
+        Información
+    </div>
+
+
+    <label>
+        Título
+    </label>
+
+
+    <input
+    id="title"
+    value="XI TITULAR DE COLOMBIA"
+    oninput="draw()">
+
+
+    <label>
+        Formación
+    </label>
+
+
+    <select
+    id="formation"
+    onchange="createPlayers()">
+
+        <option value="4-3-3">
+            4-3-3
+        </option>
+
+        <option value="4-4-2">
+            4-4-2
+        </option>
+
+        <option value="4-2-3-1">
+            4-2-3-1
+        </option>
+
+        <option value="3-5-2">
+            3-5-2
+        </option>
+
+        <option value="5-3-2">
+            5-3-2
+        </option>
+
+    </select>
+
+
+    <!-- LOGOS -->
+
+    <div class="section-title">
+        Logos
+    </div>
+
+
+    <div class="logo-grid">
+
+        <div class="logo-box">
+
+            <div
+            class="logo-preview"
+            id="competitionPreview">
+
+                <div class="logo-placeholder">
+                    🏆
+                </div>
+
+            </div>
+
+
+            <label>
+                Competencia
+            </label>
+
+
+            <input
+            type="file"
+            accept="image/*"
+            onchange="loadLogo(event,'competition')">
+
+        </div>
+
+
+        <div class="logo-box">
+
+            <div
+            class="logo-preview"
+            id="teamPreview">
+
+                <div class="logo-placeholder">
+                    ⚽
+                </div>
+
+            </div>
+
+
+            <label>
+                Selección
+            </label>
+
+
+            <input
+            type="file"
+            accept="image/*"
+            onchange="loadLogo(event,'team')">
+
+        </div>
+
+    </div>
+
+
+    <!-- JUGADORES -->
+
+    <div class="section-title">
+        Jugadores
+    </div>
+
+
+    <div
+    class="players"
+    id="players">
+    </div>
+
+
+    <!-- BOTONES -->
+
+    <button
+    class="btn-download"
+    onclick="downloadImage()">
+
+        📥 Descargar alineación
+
+    </button>
+
+
+    <button
+    class="btn-reset"
+    onclick="resetPlayers()">
+
+        🔄 Restaurar
+
+    </button>
+
+
+</div>
+
+
+<!-- =========================================
+     PREVIEW
+========================================= -->
+
+<div class="preview">
+
+    <canvas
+    id="canvas"
+    width="1080"
+    height="1350">
+    </canvas>
+
+</div>
+
+
+</div>
+
+
+<script>
+
+
+/* =========================================
+   VOLVER AL INICIO
+========================================= */
+
+function volverInicio(){
+
+    window.location.href = "index.html";
+
+}
+
+
+/* =========================================
+   CANVAS
+========================================= */
+
+const canvas =
+document.getElementById("canvas");
+
+const ctx =
+canvas.getContext("2d");
+
+
+let currentTheme =
+"blue";
+
+
+let competitionLogo =
+null;
+
+
+let teamLogo =
+null;
+
+
+let playerData =
+[];
+
+
+/* =========================================
+   TEMAS
+========================================= */
+
+const themes = {
+
+    blue:{
+
+        top:"#1669d9",
+        bottom:"#021b55",
+        field:"#383b40",
+        accent:"#2784ff",
+        light:"#ffffff",
+        dark:"#061b47"
+
+    },
+
+
+    pink:{
+
+        top:"#ff4f9a",
+        bottom:"#650d38",
+        field:"#3d3439",
+        accent:"#ff5ca7",
+        light:"#ffffff",
+        dark:"#641032"
+
+    },
+
+
+    yellow:{
+
+        top:"#ffd900",
+        bottom:"#a87300",
+        field:"#3d3b34",
+        accent:"#ffe600",
+        light:"#111111",
+        dark:"#624c00"
+
+    }
+
+};
+
+
+/* =========================================
+   FORMACIONES
+========================================= */
+
+const formations = {
+
+    "4-3-3":[
+
+        ["POR",50,94],
+
+        ["LD",88,76],
+        ["DFC",63,77],
+        ["DFC",37,77],
+        ["LI",12,76],
+
+        ["MC",80,49],
+        ["MC",50,46],
+        ["MC",20,49],
+
+        ["ED",80,24],
+        ["DC",50,20],
+        ["EI",20,24]
+
+    ],
+
+
+    "4-4-2":[
+
+        ["POR",50,94],
+
+        ["LD",88,76],
+        ["DFC",63,78],
+        ["DFC",37,78],
+        ["LI",12,76],
+
+        ["MD",88,48],
+        ["MC",63,49],
+        ["MC",37,49],
+        ["MI",12,48],
+
+        ["DC",63,22],
+        ["DC",37,22]
+
+    ],
+
+
+    "4-2-3-1":[
+
+        ["POR",50,94],
+
+        ["LD",88,76],
+        ["DFC",63,78],
+        ["DFC",37,78],
+        ["LI",12,76],
+
+        ["MCD",63,59],
+        ["MCD",37,59],
+
+        ["ED",80,41],
+        ["MCO",50,38],
+        ["EI",20,41],
+
+        ["DC",50,16]
+
+    ],
+
+
+    /* =====================================
+       3-5-2
+    ===================================== */
+
+    "3-5-2":[
+
+        ["POR",50,94],
+
+        ["DFC",75,74],
+        ["DFC",50,74],
+        ["DFC",25,74],
+
+        ["CAD",90,51],
+        ["MC",68,51],
+        ["MCO",50,51],
+        ["MC",32,51],
+        ["CAI",10,51],
+
+        ["DC",63,24],
+        ["DC",37,24]
+
+    ],
+
+
+    /* =====================================
+       5-3-2
+
+       ÚNICAMENTE ESTA FORMACIÓN
+       HA SIDO AJUSTADA:
+
+       - Defensa de 5 más arriba
+       - Mediocampistas un poco más separados
+       - Mediocampo subido
+       - Delanteros subidos
+       - Portero sin modificar
+    ===================================== */
+
+    "5-3-2":[
+
+        ["POR",50,94],
+
+        ["LD",90,68],
+        ["DFC",70,70],
+        ["DFC",50,71],
+        ["DFC",30,70],
+        ["LI",10,68],
+
+        ["MC",70,47],
+        ["MC",50,45],
+        ["MC",30,47],
+
+        ["DC",63,22],
+        ["DC",37,22]
+
+    ]
+
+};
+
+
+/* =========================================
+   CREAR JUGADORES
+========================================= */
+
+function createPlayers(){
+
+    const formation =
+    document.getElementById("formation").value;
+
+
+    const positions =
+    formations[formation];
+
+
+    const container =
+    document.getElementById("players");
+
+
+    container.innerHTML = "";
+
+
+    playerData = [];
+
+
+    positions.forEach(
+    (player,index)=>{
+
+        playerData.push({
+
+            number:index+1,
+
+            name:"",
+
+            image:null
+
+        });
+
+
+        const row =
+        document.createElement("div");
+
+
+        row.className =
+        "player-row";
+
+
+        /* CABECERA */
+
+        const top =
+        document.createElement("div");
+
+
+        top.className =
+        "player-top";
+
+
+        const number =
+        document.createElement("div");
+
+
+        number.className =
+        "player-number";
+
+
+        number.innerText =
+        index+1;
+
+
+        const position =
+        document.createElement("div");
+
+
+        position.className =
+        "player-position";
+
+
+        position.innerText =
+        player[0];
+
+
+        top.appendChild(number);
+
+        top.appendChild(position);
+
+
+        /* NOMBRE */
+
+        const name =
+        document.createElement("input");
+
+
+        name.type =
+        "text";
+
+
+        name.placeholder =
+        player[0]+" · Nombre";
+
+
+        name.oninput =
+        ()=>{
+
+            playerData[index].name =
+            name.value;
+
+
+            draw();
+
+        };
+
+
+        /* FOTO */
+
+        const photoLabel =
+        document.createElement("label");
+
+
+        photoLabel.className =
+        "player-photo-label";
+
+
+        photoLabel.innerHTML =
+        "📸 Seleccionar foto";
+
+
+        const photoInput =
+        document.createElement("input");
+
+
+        photoInput.type =
+        "file";
+
+
+        photoInput.accept =
+        "image/*";
+
+
+        photoInput.onchange =
+        function(event){
+
+            loadPlayerImage(
+                event,
+                index,
+                photoLabel
+            );
+
+        };
+
+
+        photoLabel.appendChild(
+            photoInput
+        );
+
+
+        row.appendChild(top);
+
+        row.appendChild(name);
+
+        row.appendChild(photoLabel);
+
+
+        container.appendChild(row);
+
+    });
+
+
+    draw();
+
+}
+
+
+/* =========================================
+   CARGAR FOTO DEL JUGADOR
+========================================= */
+
+function loadPlayerImage(
+    event,
+    index,
+    label
+){
+
+    const file =
+    event.target.files[0];
+
+
+    if(!file)
+        return;
+
+
+    const reader =
+    new FileReader();
+
+
+    reader.onload =
+    function(e){
+
+        const img =
+        new Image();
+
+
+        img.onload =
+        function(){
+
+            playerData[index].image =
+            img;
+
+
+            label.firstChild.textContent =
+            "✅ Foto seleccionada";
+
+
+            draw();
+
+        };
+
+
+        img.src =
+        e.target.result;
+
+    };
+
+
+    reader.readAsDataURL(file);
+
+}
+
+
+/* =========================================
+   CAMBIAR TEMA
+========================================= */
+
+function setTheme(
+    theme,
+    element
+){
+
+    currentTheme =
+    theme;
+
+
+    document
+    .querySelectorAll(".theme")
+    .forEach(
+        x =>
+        x.classList.remove("active")
+    );
+
+
+    element.classList.add("active");
+
+
+    draw();
+
+}
+
+
+/* =========================================
+   CARGAR LOGOS
+========================================= */
+
+function loadLogo(
+    event,
+    type
+){
+
+    const file =
+    event.target.files[0];
+
+
+    if(!file)
+        return;
+
+
+    const reader =
+    new FileReader();
+
+
+    reader.onload =
+    function(e){
+
+        const img =
+        new Image();
+
+
+        img.onload =
+        function(){
+
+            if(
+                type === "competition"
+            ){
+
+                competitionLogo =
+                img;
+
+
+                document
+                .getElementById(
+                    "competitionPreview"
+                )
+                .innerHTML =
+                `<img src="${e.target.result}">`;
+
+            }
+
+            else{
+
+                teamLogo =
+                img;
+
+
+                document
+                .getElementById(
+                    "teamPreview"
+                )
+                .innerHTML =
+                `<img src="${e.target.result}">`;
+
+            }
+
+
+            draw();
+
+        };
+
+
+        img.src =
+        e.target.result;
+
+    };
+
+
+    reader.readAsDataURL(file);
+
+}
+
+
+/* =========================================
+   FONDO
+========================================= */
+
+function drawBackground(theme){
+
+    const gradient =
+    ctx.createLinearGradient(
+        0,
+        0,
+        0,
+        canvas.height
+    );
+
+
+    gradient.addColorStop(
+        0,
+        theme.top
+    );
+
+
+    gradient.addColorStop(
+        .45,
+        theme.top
+    );
+
+
+    gradient.addColorStop(
+        1,
+        theme.bottom
+    );
+
+
+    ctx.fillStyle =
+    gradient;
+
+
+    ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    const glow =
+    ctx.createRadialGradient(
+        540,
+        250,
+        20,
+        540,
+        250,
+        700
+    );
+
+
+    glow.addColorStop(
+        0,
+        "rgba(255,255,255,.10)"
+    );
+
+
+    glow.addColorStop(
+        1,
+        "rgba(255,255,255,0)"
+    );
+
+
+    ctx.fillStyle =
+    glow;
+
+
+    ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+function drawHeader(theme){
+
+    const title =
+    document
+    .getElementById("title")
+    .value
+    .toUpperCase();
+
+
+    ctx.textAlign =
+    "center";
+
+
+    ctx.fillStyle =
+    theme.light;
+
+
+    ctx.font =
+    "900 67px Arial";
+
+
+    wrapText(
+        title,
+        canvas.width/2,
+        70,
+        850,
+        70
+    );
+
+
+    ctx.fillStyle =
+    theme.accent;
+
+
+    ctx.fillRect(
+        385,
+        165,
+        310,
+        8
+    );
+
+}
+
+
+/* =========================================
+   LOGOS
+========================================= */
+
+function drawLogos(theme){
+
+    if(competitionLogo){
+
+        drawImageContain(
+            competitionLogo,
+            45,
+            35,
+            190,
+            125
+        );
+
+    }
+
+    else{
+
+        drawLogoPlaceholder(
+            140,
+            95,
+            "🏆"
+        );
+
+    }
+
+
+    if(teamLogo){
+
+        drawImageContain(
+            teamLogo,
+            845,
+            35,
+            190,
+            125
+        );
+
+    }
+
+    else{
+
+        drawLogoPlaceholder(
+            940,
+            95,
+            "⚽"
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   PLACEHOLDER LOGO
+========================================= */
+
+function drawLogoPlaceholder(
+    x,
+    y,
+    text
+){
+
+    ctx.beginPath();
+
+
+    ctx.arc(
+        x,
+        y,
+        48,
+        0,
+        Math.PI*2
+    );
+
+
+    ctx.fillStyle =
+    "rgba(255,255,255,.15)";
+
+
+    ctx.fill();
+
+
+    ctx.font =
+    "45px Arial";
+
+
+    ctx.textAlign =
+    "center";
+
+
+    ctx.fillStyle =
+    "#fff";
+
+
+    ctx.fillText(
+        text,
+        x,
+        y+15
+    );
+
+}
+
+
+/* =========================================
+   CANCHA
+========================================= */
+
+function drawField(theme){
+
+    const topY =
+    205;
+
+
+    const bottomY =
+    1270;
+
+
+    const topLeft =
+    105;
+
+
+    const topRight =
+    975;
+
+
+    const bottomLeft =
+    18;
+
+
+    const bottomRight =
+    1062;
+
+
+    /* SOMBRA */
+
+    ctx.beginPath();
+
+
+    ctx.moveTo(
+        topLeft-15,
+        topY
+    );
+
+
+    ctx.lineTo(
+        topRight+15,
+        topY
+    );
+
+
+    ctx.lineTo(
+        bottomRight+15,
+        bottomY+10
+    );
+
+
+    ctx.lineTo(
+        bottomLeft-15,
+        bottomY+10
+    );
+
+
+    ctx.closePath();
+
+
+    ctx.fillStyle =
+    "rgba(0,0,0,.45)";
+
+
+    ctx.fill();
+
+
+    /* CAMPO */
+
+    const fieldGradient =
+    ctx.createLinearGradient(
+        0,
+        topY,
+        0,
+        bottomY
+    );
+
+
+    fieldGradient.addColorStop(
+        0,
+        "#4a4d52"
+    );
+
+
+    fieldGradient.addColorStop(
+        .5,
+        "#35383c"
+    );
+
+
+    fieldGradient.addColorStop(
+        1,
+        "#24272b"
+    );
+
+
+    ctx.beginPath();
+
+
+    ctx.moveTo(
+        topLeft,
+        topY
+    );
+
+
+    ctx.lineTo(
+        topRight,
+        topY
+    );
+
+
+    ctx.lineTo(
+        bottomRight,
+        bottomY
+    );
+
+
+    ctx.lineTo(
+        bottomLeft,
+        bottomY
+    );
+
+
+    ctx.closePath();
+
+
+    ctx.fillStyle =
+    fieldGradient;
+
+
+    ctx.fill();
+
+
+    /* RAYAS */
+
+    for(
+        let i=0;
+        i<11;
+        i++
+    ){
+
+        const y =
+        topY +
+        ((bottomY-topY)/11)*i;
+
+
+        const left =
+        topLeft +
+        (bottomLeft-topLeft)*
+        (i/11);
+
+
+        const right =
+        topRight +
+        (bottomRight-topRight)*
+        (i/11);
+
+
+        ctx.beginPath();
+
+
+        ctx.moveTo(
+            left,
+            y
+        );
+
+
+        ctx.lineTo(
+            right,
+            y
+        );
+
+
+        ctx.strokeStyle =
+        i%2===0
+        ?
+        "rgba(255,255,255,.025)"
+        :
+        "rgba(0,0,0,.025)";
+
+
+        ctx.lineWidth =
+        24;
+
+
+        ctx.stroke();
+
+    }
+
+
+    /* BORDE */
+
+    ctx.strokeStyle =
+    "rgba(255,255,255,.85)";
+
+
+    ctx.lineWidth =
+    5;
+
+
+    ctx.beginPath();
+
+
+    ctx.moveTo(
+        topLeft,
+        topY
+    );
+
+
+    ctx.lineTo(
+        topRight,
+        topY
+    );
+
+
+    ctx.lineTo(
+        bottomRight,
+        bottomY
+    );
+
+
+    ctx.lineTo(
+        bottomLeft,
+        bottomY
+    );
+
+
+    ctx.closePath();
+
+
+    ctx.stroke();
+
+
+    /* MITAD */
+
+    const middleY =
+    topY +
+    (bottomY-topY)*.50;
+
+
+    const middleLeft =
+    topLeft +
+    (bottomLeft-topLeft)*.50;
+
+
+    const middleRight =
+    topRight +
+    (bottomRight-topRight)*.50;
+
+
+    ctx.beginPath();
+
+
+    ctx.moveTo(
+        middleLeft,
+        middleY
+    );
+
+
+    ctx.lineTo(
+        middleRight,
+        middleY
+    );
+
+
+    ctx.stroke();
+
+
+    /* CÍRCULO CENTRAL */
+
+    ctx.beginPath();
+
+
+    ctx.ellipse(
+        540,
+        middleY,
+        112,
+        55,
+        0,
+        0,
+        Math.PI*2
+    );
+
+
+    ctx.stroke();
+
+
+    /* PUNTO CENTRAL */
+
+    ctx.beginPath();
+
+
+    ctx.arc(
+        540,
+        middleY,
+        6,
+        0,
+        Math.PI*2
+    );
+
+
+    ctx.fillStyle =
+    "#fff";
+
+
+    ctx.fill();
+
+
+    drawPenaltyArea(
+        topY,
+        false
+    );
+
+
+    drawPenaltyArea(
+        bottomY,
+        true
+    );
+
+}
+
+
+/* =========================================
+   ÁREAS
+========================================= */
+
+function drawPenaltyArea(
+    y,
+    bottom
+){
+
+    const width =
+    370;
+
+
+    const x1 =
+    540-width/2;
+
+
+    const x2 =
+    540+width/2;
+
+
+    ctx.beginPath();
+
+
+    if(!bottom){
+
+        ctx.moveTo(
+            x1,
+            y
+        );
+
+
+        ctx.lineTo(
+            x1-10,
+            y+150
+        );
+
+
+        ctx.lineTo(
+            x2+10,
+            y+150
+        );
+
+
+        ctx.lineTo(
+            x2,
+            y
+        );
+
+    }
+
+    else{
+
+        ctx.moveTo(
+            x1,
+            y
+        );
+
+
+        ctx.lineTo(
+            x1-10,
+            y-150
+        );
+
+
+        ctx.lineTo(
+            x2+10,
+            y-150
+        );
+
+
+        ctx.lineTo(
+            x2,
+            y
+        );
+
+    }
+
+
+    ctx.stroke();
+
+}
+
+
+/* =========================================
+   JUGADORES
+========================================= */
+
+function drawPlayers(theme){
+
+    const formation =
+    document
+    .getElementById("formation")
+    .value;
+
+
+    const positions =
+    formations[formation];
+
+
+    positions.forEach(
+    (player,index)=>{
+
+        const xPercent =
+        player[1]/100;
+
+
+        const yPercent =
+        player[2]/100;
+
+
+        const topLeft =
+        105;
+
+
+        const topRight =
+        975;
+
+
+        const bottomLeft =
+        18;
+
+
+        const bottomRight =
+        1062;
+
+
+        const topY =
+        205;
+
+
+        const bottomY =
+        1270;
+
+
+        const y =
+        topY +
+        (bottomY-topY)*
+        yPercent;
+
+
+        const left =
+        topLeft +
+        (bottomLeft-topLeft)*
+        yPercent;
+
+
+        const right =
+        topRight +
+        (bottomRight-topRight)*
+        yPercent;
+
+
+        const x =
+        left +
+        (right-left)*
+        xPercent;
+
+
+        drawPlayer(
+            x,
+            y,
+            playerData[index],
+            theme,
+            player[0]
+        );
+
+    });
+
+}
+
+
+/* =========================================
+   JUGADOR CON FOTO
+========================================= */
+
+function drawPlayer(
+    x,
+    y,
+    data,
+    theme,
+    position
+){
+
+    let name =
+    data.name.trim();
+
+
+    if(!name){
+
+        name =
+        "JUGADOR";
+
+    }
+
+
+    name =
+    name.toUpperCase();
+
+
+    if(name.length>16){
+
+        name =
+        name.substring(
+            0,
+            16
+        );
+
+    }
+
+
+    ctx.save();
+
+
+    /* HALO EXTERIOR */
+
+    ctx.shadowColor =
+    theme.accent;
+
+
+    ctx.shadowBlur =
+    35;
+
+
+    const halo =
+    ctx.createRadialGradient(
+        x,
+        y,
+        15,
+        x,
+        y,
+        105
+    );
+
+
+    halo.addColorStop(
+        0,
+        theme.accent+"80"
+    );
+
+
+    halo.addColorStop(
+        .35,
+        theme.accent+"35"
+    );
+
+
+    halo.addColorStop(
+        .7,
+        theme.accent+"12"
+    );
+
+
+    halo.addColorStop(
+        1,
+        "rgba(0,0,0,0)"
+    );
+
+
+    ctx.beginPath();
+
+
+    ctx.arc(
+        x,
+        y,
+        105,
+        0,
+        Math.PI*2
+    );
+
+
+    ctx.fillStyle =
+    halo;
+
+
+    ctx.fill();
+
+
+    ctx.shadowBlur =
+    0;
+
+
+    /* ANILLO EXTERIOR */
+
+    ctx.beginPath();
+
+
+    ctx.arc(
+        x,
+        y,
+        68,
+        0,
+        Math.PI*2
+    );
+
+
+    let ringGradient;
+
+
+    if(
+        currentTheme ===
+        "yellow"
+    ){
+
+        ringGradient =
+        ctx.createLinearGradient(
+            x-70,
+            y-70,
+            x+70,
+            y+70
+        );
+
+
+        ringGradient.addColorStop(
+            0,
+            "#f9d900"
+        );
+
+
+        ringGradient.addColorStop(
+            .45,
+            "#0757a8"
+        );
+
+
+        ringGradient.addColorStop(
+            1,
+            "#d9281c"
+        );
+
+    }
+
+    else{
+
+        ringGradient =
+        ctx.createLinearGradient(
+            x-70,
+            y-70,
+            x+70,
+            y+70
+        );
+
+
+        ringGradient.addColorStop(
+            0,
+            "#ffffff"
+        );
+
+
+        ringGradient.addColorStop(
+            .25,
+            theme.accent
+        );
+
+
+        ringGradient.addColorStop(
+            1,
+            theme.dark
+        );
+
+    }
+
+
+    ctx.strokeStyle =
+    ringGradient;
+
+
+    ctx.lineWidth =
+    8;
+
+
+    ctx.stroke();
+
+
+    /* CÍRCULO OSCURO */
+
+    ctx.beginPath();
+
+
+    ctx.arc(
+        x,
+        y,
+        59,
+        0,
+        Math.PI*2
+    );
+
+
+    ctx.fillStyle =
+    "#080b10";
+
+
+    ctx.fill();
+
+
+    /* FOTO */
+
+    if(data.image){
+
+        drawPlayerPhoto(
+            data.image,
+            x,
+            y,
+            56
+        );
+
+    }
+
+    else{
+
+        const emptyGradient =
+        ctx.createRadialGradient(
+            x-15,
+            y-20,
+            5,
+            x,
+            y,
+            60
+        );
+
+
+        emptyGradient.addColorStop(
+            0,
+            "#303743"
+        );
+
+
+        emptyGradient.addColorStop(
+            1,
+            "#090c11"
+        );
+
+
+        ctx.beginPath();
+
+
+        ctx.arc(
+            x,
+            y,
+            56,
+            0,
+            Math.PI*2
+        );
+
+
+        ctx.fillStyle =
+        emptyGradient;
+
+
+        ctx.fill();
+
+
+        ctx.fillStyle =
+        "rgba(255,255,255,.4)";
+
+
+        ctx.font =
+        "bold 14px Arial";
+
+
+        ctx.textAlign =
+        "center";
+
+
+        ctx.fillText(
+            "FOTO",
+            x,
+            y+5
+        );
+
+    }
+
+
+    /* BRILLO SUPERIOR */
+
+    ctx.save();
+
+
+    ctx.beginPath();
+
+
+    ctx.arc(
+        x,
+        y,
+        56,
+        0,
+        Math.PI*2
+    );
+
+
+    ctx.clip();
+
+
+    const shine =
+    ctx.createLinearGradient(
+        x-55,
+        y-60,
+        x+50,
+        y+30
+    );
+
+
+    shine.addColorStop(
+        0,
+        "rgba(255,255,255,.42)"
+    );
+
+
+    shine.addColorStop(
+        .18,
+        "rgba(255,255,255,.12)"
+    );
+
+
+    shine.addColorStop(
+        .45,
+        "rgba(255,255,255,0)"
+    );
+
+
+    shine.addColorStop(
+        1,
+        "rgba(255,255,255,0)"
+    );
+
+
+    ctx.fillStyle =
+    shine;
+
+
+    ctx.fillRect(
+        x-60,
+        y-60,
+        120,
+        120
+    );
+
+
+    ctx.restore();
+
+
+    /* LÍNEA DE LUZ */
+
+    ctx.beginPath();
+
+
+    ctx.arc(
+        x,
+        y,
+        59,
+        Math.PI*1.05,
+        Math.PI*1.85
+    );
+
+
+    ctx.strokeStyle =
+    "rgba(255,255,255,.9)";
+
+
+    ctx.lineWidth =
+    3;
+
+
+    ctx.stroke();
+
+
+    /* POSICIÓN */
+
+    ctx.font =
+    "bold 13px Arial";
+
+
+    ctx.textAlign =
+    "center";
+
+
+    ctx.textBaseline =
+    "middle";
+
+
+    const positionWidth =
+    ctx.measureText(
+        position
+    ).width+20;
+
+
+    roundedRect(
+        x-positionWidth/2,
+        y-86,
+        positionWidth,
+        23,
+        6
+    );
+
+
+    ctx.fillStyle =
+    theme.accent;
+
+
+    ctx.fill();
+
+
+    ctx.fillStyle =
+    currentTheme === "yellow"
+    ?
+    "#111111"
+    :
+    "#ffffff";
+
+
+    ctx.fillText(
+        position,
+        x,
+        y-74
+    );
+
+
+    /* NOMBRE */
+
+    ctx.font =
+    "900 19px Arial";
+
+
+    const nameWidth =
+    ctx.measureText(
+        name
+    ).width+30;
+
+
+    ctx.shadowColor =
+    "rgba(0,0,0,.8)";
+
+
+    ctx.shadowBlur =
+    14;
+
+
+    ctx.shadowOffsetY =
+    5;
+
+
+    roundedRect(
+        x-nameWidth/2,
+        y+68,
+        nameWidth,
+        36,
+        8
+    );
+
+
+    ctx.fillStyle =
+    "#ffffff";
+
+
+    ctx.fill();
+
+
+    ctx.shadowBlur =
+    0;
+
+
+    ctx.shadowOffsetY =
+    0;
+
+
+    /* BARRA DE COLOR */
+
+    ctx.fillStyle =
+    theme.accent;
+
+
+    ctx.fillRect(
+        x-nameWidth/2,
+        y+99,
+        nameWidth,
+        5
+    );
+
+
+    ctx.fillStyle =
+    "#11151b";
+
+
+    ctx.fillText(
+        name,
+        x,
+        y+88
+    );
+
+
+    ctx.restore();
+
+
+    ctx.textBaseline =
+    "alphabetic";
+
+}
+
+
+/* =========================================
+   RECORTAR FOTO EN CÍRCULO
+========================================= */
+
+function drawPlayerPhoto(
+    image,
+    x,
+    y,
+    radius
+){
+
+    ctx.save();
+
+
+    ctx.beginPath();
+
+
+    ctx.arc(
+        x,
+        y,
+        radius,
+        0,
+        Math.PI*2
+    );
+
+
+    ctx.clip();
+
+
+    const imageRatio =
+    image.width /
+    image.height;
+
+
+    let width;
+    let height;
+
+
+    if(
+        imageRatio > 1
+    ){
+
+        height =
+        radius*2;
+
+
+        width =
+        height*imageRatio;
+
+    }
+
+    else{
+
+        width =
+        radius*2;
+
+
+        height =
+        width/imageRatio;
+
+    }
+
+
+    ctx.drawImage(
+        image,
+        x-width/2,
+        y-height/2,
+        width,
+        height
+    );
+
+
+    ctx.restore();
+
+}
+
+
+/* =========================================
+   RECTÁNGULO REDONDEADO
+========================================= */
+
+function roundedRect(
+    x,
+    y,
+    width,
+    height,
+    radius
+){
+
+    ctx.beginPath();
+
+
+    ctx.moveTo(
+        x+radius,
+        y
+    );
+
+
+    ctx.lineTo(
+        x+width-radius,
+        y
+    );
+
+
+    ctx.quadraticCurveTo(
+        x+width,
+        y,
+        x+width,
+        y+radius
+    );
+
+
+    ctx.lineTo(
+        x+width,
+        y+height-radius
+    );
+
+
+    ctx.quadraticCurveTo(
+        x+width,
+        y+height,
+        x+width-radius,
+        y+height
+    );
+
+
+    ctx.lineTo(
+        x+radius,
+        y+height
+    );
+
+
+    ctx.quadraticCurveTo(
+        x,
+        y+height,
+        x,
+        y+height-radius
+    );
+
+
+    ctx.lineTo(
+        x,
+        y+radius
+    );
+
+
+    ctx.quadraticCurveTo(
+        x,
+        y,
+        x+radius,
+        y
+    );
+
+
+    ctx.closePath();
+
+}
+
+
+/* =========================================
+   IMAGEN CONTAIN
+========================================= */
+
+function drawImageContain(
+    image,
+    x,
+    y,
+    width,
+    height
+){
+
+    const ratio =
+    Math.min(
+        width/image.width,
+        height/image.height
+    );
+
+
+    const w =
+    image.width*ratio;
+
+
+    const h =
+    image.height*ratio;
+
+
+    ctx.drawImage(
+        image,
+        x+(width-w)/2,
+        y+(height-h)/2,
+        w,
+        h
+    );
+
+}
+
+
+/* =========================================
+   TEXTO ENVUELTO
+========================================= */
+
+function wrapText(
+    text,
+    x,
+    y,
+    maxWidth,
+    lineHeight
+){
+
+    const words =
+    text.split(" ");
+
+
+    let line = "";
+
+
+    let lines = [];
+
+
+    for(
+        let n=0;
+        n<words.length;
+        n++
+    ){
+
+        const testLine =
+        line+
+        words[n]+" ";
+
+
+        const testWidth =
+        ctx.measureText(
+            testLine
+        ).width;
+
+
+        if(
+            testWidth>maxWidth &&
+            n>0
+        ){
+
+            lines.push(
+                line
+            );
+
+
+            line =
+            words[n]+" ";
+
+        }
+
+        else{
+
+            line =
+            testLine;
+
+        }
+
+    }
+
+
+    lines.push(
+        line
+    );
+
+
+    lines.forEach(
+    (line,index)=>{
+
+        ctx.fillText(
+            line,
+            x,
+            y+
+            index*lineHeight
+        );
+
+    });
+
+}
+
+
+/* =========================================
+   DIBUJAR TODO
+========================================= */
+
+function draw(){
+
+    const theme =
+    themes[currentTheme];
+
+
+    drawBackground(
+        theme
+    );
+
+
+    drawLogos(
+        theme
+    );
+
+
+    drawHeader(
+        theme
+    );
+
+
+    drawField(
+        theme
+    );
+
+
+    drawPlayers(
+        theme
+    );
+
+}
+
+
+/* =========================================
+   DESCARGAR PNG
+========================================= */
+
+function downloadImage(){
+
+    const link =
+    document.createElement("a");
+
+
+    const title =
+    document
+    .getElementById("title")
+    .value
+    .trim()
+    .replace(
+        /\s+/g,
+        "-"
+    )
+    .toLowerCase();
+
+
+    link.download =
+    `${title || "alineacion"}.png`;
+
+
+    link.href =
+    canvas.toDataURL(
+        "image/png"
+    );
+
+
+    link.click();
+
+}
+
+
+/* =========================================
+   RESTAURAR
+========================================= */
+
+function resetPlayers(){
+
+    createPlayers();
+
+}
+
+
+/* =========================================
+   INICIAR
+========================================= */
+
+createPlayers();
+
+</script>
+
+</body>
+
+</html>

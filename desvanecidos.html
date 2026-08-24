@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Desvanecidos · Centro Deportivo</title>
+
+
+<style>
+
+/* =========================================================
+   CONFIGURACIÓN GENERAL
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+
+    margin: 0;
+    padding: 0;
+
+    width: 100%;
+    min-height: 100%;
+
+}
+
+body {
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+
+        radial-gradient(
+            circle at top left,
+            #183b70 0%,
+            #081525 35%,
+            #03070d 75%,
+            #000000 100%
+        );
+
+    color: white;
+
+    min-height: 100vh;
+
+    padding: 30px;
+
+}
+
+
+/* =========================================================
+   LUCES DECORATIVAS
+========================================================= */
+
+body::before {
+
+    content: "";
+
+    position: fixed;
+
+    width: 500px;
+    height: 500px;
+
+    top: -220px;
+    right: -180px;
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(0,119,255,0.30),
+            transparent 70%
+        );
+
+    filter: blur(20px);
+
+    pointer-events: none;
+
+}
+
+
+body::after {
+
+    content: "";
+
+    position: fixed;
+
+    width: 450px;
+    height: 450px;
+
+    bottom: -220px;
+    left: -180px;
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(0,200,255,0.15),
+            transparent 70%
+        );
+
+    filter: blur(20px);
+
+    pointer-events: none;
+
+}
+
+
+/* =========================================================
+   CONTENEDOR PRINCIPAL
+========================================================= */
+
+.contenedor {
+
+    width: 100%;
+
+    max-width: 1100px;
+
+    margin: auto;
+
+    position: relative;
+
+    z-index: 2;
+
+}
+
+
+/* =========================================================
+   ENCABEZADO
+========================================================= */
+
+.encabezado {
+
+    text-align: center;
+
+    margin-bottom: 30px;
+
+}
+
+
+.encabezado .icono {
+
+    font-size: 55px;
+
+    display: block;
+
+    margin-bottom: 10px;
+
+    filter:
+
+        drop-shadow(
+            0 8px 18px
+            rgba(0,0,0,0.6)
+        );
+
+}
+
+
+.encabezado h1 {
+
+    margin: 0;
+
+    font-size: 40px;
+
+    font-weight: 900;
+
+    text-transform: uppercase;
+
+    letter-spacing: -1px;
+
+}
+
+
+.encabezado p {
+
+    margin: 10px 0 0;
+
+    color: #9eafc2;
+
+    font-size: 16px;
+
+}
+
+
+/* =========================================================
+   PANEL PRINCIPAL
+========================================================= */
+
+.panel {
+
+    display: grid;
+
+    grid-template-columns:
+        330px 1fr;
+
+    gap: 30px;
+
+    padding: 30px;
+
+    border-radius: 24px;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,0.11),
+            rgba(255,255,255,0.035)
+        );
+
+    border:
+
+        1px solid
+        rgba(255,255,255,0.13);
+
+    box-shadow:
+
+        0 25px 70px
+        rgba(0,0,0,0.40);
+
+    backdrop-filter:
+        blur(15px);
+
+    -webkit-backdrop-filter:
+        blur(15px);
+
+}
+
+
+/* =========================================================
+   CONTROLES
+========================================================= */
+
+.controles {
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+}
+
+
+.campo {
+
+    margin-bottom: 20px;
+
+}
+
+
+label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    color: #dce7f3;
+
+}
+
+
+input[type="file"] {
+
+    width: 100%;
+
+    padding: 14px;
+
+    border-radius: 10px;
+
+    border:
+
+        1px solid
+        rgba(255,255,255,0.15);
+
+    background:
+
+        rgba(0,0,0,0.35);
+
+    color: #bfcbd8;
+
+    cursor: pointer;
+
+}
+
+
+input[type="file"]::file-selector-button {
+
+    border: none;
+
+    padding: 10px 15px;
+
+    margin-right: 10px;
+
+    border-radius: 8px;
+
+    background: #0875e8;
+
+    color: white;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+}
+
+
+/* =========================================================
+   INFORMACIÓN
+========================================================= */
+
+.info {
+
+    padding: 16px;
+
+    border-radius: 12px;
+
+    background:
+
+        rgba(0,0,0,0.25);
+
+    border:
+
+        1px solid
+        rgba(255,255,255,0.08);
+
+    color: #9eafc2;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+    margin-bottom: 20px;
+
+}
+
+
+.info strong {
+
+    color: white;
+
+}
+
+
+/* =========================================================
+   BOTONES
+========================================================= */
+
+button {
+
+    width: 100%;
+
+    border: none;
+
+    border-radius: 10px;
+
+    padding: 15px;
+
+    font-size: 16px;
+
+    font-weight: 900;
+
+    cursor: pointer;
+
+    color: white;
+
+    transition:
+
+        transform 0.2s ease,
+
+        box-shadow 0.2s ease,
+
+        opacity 0.2s ease;
+
+}
+
+
+button:hover {
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+.btn-generar {
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #0875e8,
+            #043b78
+        );
+
+    box-shadow:
+
+        0 12px 30px
+        rgba(0,100,255,0.25);
+
+}
+
+
+.btn-descargar {
+
+    margin-top: 12px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #168a3b,
+            #075321
+        );
+
+    box-shadow:
+
+        0 12px 30px
+        rgba(0,150,60,0.20);
+
+}
+
+
+.btn-regresar {
+
+    margin-top: 12px;
+
+    background:
+
+        rgba(255,255,255,0.08);
+
+    border:
+
+        1px solid
+        rgba(255,255,255,0.12);
+
+    color: #c5d0dc;
+
+}
+
+
+/* =========================================================
+   VISTA PREVIA
+========================================================= */
+
+.preview-contenedor {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 600px;
+
+    padding: 20px;
+
+    border-radius: 18px;
+
+    background:
+
+        rgba(0,0,0,0.20);
+
+    border:
+
+        1px solid
+        rgba(255,255,255,0.08);
+
+}
+
+
+/* =========================================================
+   LIENZO 4:5
+========================================================= */
+
+.lienzo {
+
+    position: relative;
+
+    width: 400px;
+
+    height: 500px;
+
+    max-width: 100%;
+
+    background: #050505;
+
+    overflow: hidden;
+
+    border-radius: 8px;
+
+    box-shadow:
+
+        0 20px 50px
+        rgba(0,0,0,0.65);
+
+}
+
+
+/* =========================================================
+   IMAGEN
+========================================================= */
+
+#imagen {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    object-position: center;
+
+    display: none;
+
+}
+
+
+/* =========================================================
+   DESVANECIDO
+=========================================================
+
+   OCUPA EL 55% INFERIOR.
+
+   Esto hace que el efecto empiece
+   mucho más arriba y sea más amplio.
+
+========================================================= */
+
+.desvanecido {
+
+    position: absolute;
+
+    left: 0;
+
+    bottom: 0;
+
+    width: 100%;
+
+    height: 55%;
+
+    pointer-events: none;
+
+    background:
+
+        linear-gradient(
+            to bottom,
+
+            rgba(0,0,0,0) 0%,
+
+            rgba(0,0,0,0.05) 10%,
+
+            rgba(0,0,0,0.14) 22%,
+
+            rgba(0,0,0,0.30) 35%,
+
+            rgba(0,0,0,0.50) 48%,
+
+            rgba(0,0,0,0.68) 62%,
+
+            rgba(0,0,0,0.82) 75%,
+
+            rgba(0,0,0,0.93) 88%,
+
+            rgba(0,0,0,0.98) 95%,
+
+            #000000 100%
+        );
+
+    display: none;
+
+}
+
+
+/* =========================================================
+   SIN IMAGEN
+========================================================= */
+
+.sin-imagen {
+
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 30px;
+
+    color: #718096;
+
+    font-size: 16px;
+
+}
+
+
+/* =========================================================
+   ESTADO
+========================================================= */
+
+.estado {
+
+    margin-top: 12px;
+
+    text-align: center;
+
+    color: #718096;
+
+    font-size: 13px;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 850px) {
+
+    body {
+
+        padding: 15px;
+
+    }
+
+
+    .panel {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .preview-contenedor {
+
+        min-height: auto;
+
+    }
+
+
+    .lienzo {
+
+        width: 360px;
+
+        height: 450px;
+
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .encabezado h1 {
+
+        font-size: 29px;
+
+    }
+
+
+    .encabezado .icono {
+
+        font-size: 45px;
+
+    }
+
+
+    .panel {
+
+        padding: 18px;
+
+    }
+
+
+    .lienzo {
+
+        width: 300px;
+
+        height: 375px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="contenedor">
+
+
+    <!-- =====================================================
+         ENCABEZADO
+    ====================================================== -->
+
+    <div class="encabezado">
+
+        <span class="icono">
+            ✨
+        </span>
+
+        <h1>
+            DESVANECIDOS
+        </h1>
+
+        <p>
+            Crea un efecto profesional de fotografía hacia negro
+        </p>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         PANEL
+    ====================================================== -->
+
+    <div class="panel">
+
+
+        <!-- =================================================
+             CONTROLES
+        ================================================== -->
+
+        <div class="controles">
+
+
+            <div class="campo">
+
+                <label for="imagenInput">
+
+                    📷 SELECCIONA TU IMAGEN
+
+                </label>
+
+
+                <input
+                    type="file"
+                    id="imagenInput"
+                    accept="image/*"
+                    onchange="cargarImagen(event)"
+                >
+
+            </div>
+
+
+
+            <div class="info">
+
+                <strong>
+                    FORMATO RECOMENDADO
+                </strong>
+
+                <br>
+
+                Utiliza una fotografía vertical
+                <strong>4:5</strong>.
+
+                <br><br>
+
+                El desvanecido ocupa aproximadamente
+                el
+
+                <strong>
+                    55% inferior
+                </strong>
+
+                de la imagen.
+
+                <br><br>
+
+                Esto crea una transición amplia,
+                suave y profesional hacia el negro.
+
+            </div>
+
+
+
+            <button
+                class="btn-generar"
+                onclick="aplicarDesvanecido()"
+            >
+
+                ✨ APLICAR DESVANECIDO
+
+            </button>
+
+
+
+            <button
+                class="btn-descargar"
+                onclick="descargarImagen()"
+            >
+
+                🖼️ DESCARGAR PNG
+
+            </button>
+
+
+
+            <button
+                class="btn-regresar"
+                onclick="regresarMenu()"
+            >
+
+                ← REGRESAR AL MENÚ PRINCIPAL
+
+            </button>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             VISTA PREVIA
+        ================================================== -->
+
+        <div>
+
+
+            <div class="preview-contenedor">
+
+
+                <div class="lienzo">
+
+
+                    <div
+                        class="sin-imagen"
+                        id="sinImagen"
+                    >
+
+                        📷
+
+                        <br>
+
+                        Selecciona una fotografía
+
+                    </div>
+
+
+                    <img
+                        id="imagen"
+                        alt="Vista previa"
+                    >
+
+
+                    <div
+                        class="desvanecido"
+                        id="desvanecido"
+                    ></div>
+
+
+                </div>
+
+
+            </div>
+
+
+            <div
+                class="estado"
+                id="estado"
+            >
+
+                Esperando una imagen...
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+/* =========================================================
+   VARIABLE GLOBAL
+========================================================= */
+
+let imagenCargada = null;
+
+
+/* =========================================================
+   CARGAR IMAGEN
+========================================================= */
+
+function cargarImagen(event) {
+
+    const archivo =
+        event.target.files[0];
+
+
+    if (!archivo) {
+
+        return;
+
+    }
+
+
+    if (!archivo.type.startsWith("image/")) {
+
+        alert(
+            "Selecciona una imagen válida."
+        );
+
+        return;
+
+    }
+
+
+    const lector =
+        new FileReader();
+
+
+    lector.onload =
+        function(e) {
+
+            const imagen =
+                document.getElementById(
+                    "imagen"
+                );
+
+
+            const sinImagen =
+                document.getElementById(
+                    "sinImagen"
+                );
+
+
+            const desvanecido =
+                document.getElementById(
+                    "desvanecido"
+                );
+
+
+            imagenCargada =
+                e.target.result;
+
+
+            imagen.src =
+                imagenCargada;
+
+
+            imagen.style.display =
+                "block";
+
+
+            sinImagen.style.display =
+                "none";
+
+
+            /*
+               Cada vez que se carga
+               una nueva imagen ocultamos
+               el efecto hasta pulsar
+               nuevamente "Aplicar".
+            */
+
+            desvanecido.style.display =
+                "none";
+
+
+            document.getElementById(
+                "estado"
+            ).innerText =
+                "Imagen cargada correctamente.";
+
+        };
+
+
+    lector.readAsDataURL(
+        archivo
+    );
+
+}
+
+
+/* =========================================================
+   APLICAR DESVANECIDO
+========================================================= */
+
+function aplicarDesvanecido() {
+
+    if (!imagenCargada) {
+
+        alert(
+            "Primero selecciona una imagen."
+        );
+
+        return;
+
+    }
+
+
+    const desvanecido =
+        document.getElementById(
+            "desvanecido"
+        );
+
+
+    desvanecido.style.display =
+        "block";
+
+
+    document.getElementById(
+        "estado"
+    ).innerText =
+        "✅ Desvanecido aplicado correctamente.";
+
+}
+
+
+/* =========================================================
+   DESCARGAR PNG
+========================================================= */
+
+function descargarImagen() {
+
+    if (!imagenCargada) {
+
+        alert(
+            "Primero selecciona una imagen."
+        );
+
+        return;
+
+    }
+
+
+    const imagen =
+        new Image();
+
+
+    imagen.onload =
+        function() {
+
+
+            /* ===============================================
+               CANVAS FINAL
+
+               1080 × 1350
+
+               RELACIÓN 4:5
+            =============================================== */
+
+            const ancho =
+                1080;
+
+            const alto =
+                1350;
+
+
+            const canvas =
+                document.createElement(
+                    "canvas"
+                );
+
+
+            canvas.width =
+                ancho;
+
+            canvas.height =
+                alto;
+
+
+            const ctx =
+                canvas.getContext(
+                    "2d"
+                );
+
+
+            /* ===============================================
+               FONDO NEGRO
+            =============================================== */
+
+            ctx.fillStyle =
+                "#000000";
+
+            ctx.fillRect(
+                0,
+                0,
+                ancho,
+                alto
+            );
+
+
+            /* ===============================================
+               ESCALAR IMAGEN
+
+               La fotografía llena
+               todo el formato 4:5.
+            =============================================== */
+
+            const escala =
+                Math.max(
+                    ancho / imagen.naturalWidth,
+                    alto / imagen.naturalHeight
+                );
+
+
+            const nuevoAncho =
+                imagen.naturalWidth *
+                escala;
+
+
+            const nuevoAlto =
+                imagen.naturalHeight *
+                escala;
+
+
+            const x =
+                (ancho - nuevoAncho) / 2;
+
+
+            const y =
+                (alto - nuevoAlto) / 2;
+
+
+            /* ===============================================
+               DIBUJAR FOTOGRAFÍA
+            =============================================== */
+
+            ctx.drawImage(
+                imagen,
+                x,
+                y,
+                nuevoAncho,
+                nuevoAlto
+            );
+
+
+            /* ===============================================
+               DESVANECIDO
+
+               55% DEL ALTO TOTAL
+
+               1350 × 0.55
+               = 742.5 px
+
+               Comienza aproximadamente
+               en el 45% de la imagen.
+            =============================================== */
+
+            const alturaDegradado =
+                alto * 0.55;
+
+
+            const inicio =
+                alto - alturaDegradado;
+
+
+            const degradado =
+                ctx.createLinearGradient(
+                    0,
+                    inicio,
+                    0,
+                    alto
+                );
+
+
+            /* ===============================================
+               PUNTOS DEL DEGRADADO
+            =============================================== */
+
+            degradado.addColorStop(
+                0,
+                "rgba(0,0,0,0)"
+            );
+
+
+            degradado.addColorStop(
+                0.10,
+                "rgba(0,0,0,0.05)"
+            );
+
+
+            degradado.addColorStop(
+                0.22,
+                "rgba(0,0,0,0.14)"
+            );
+
+
+            degradado.addColorStop(
+                0.35,
+                "rgba(0,0,0,0.30)"
+            );
+
+
+            degradado.addColorStop(
+                0.48,
+                "rgba(0,0,0,0.50)"
+            );
+
+
+            degradado.addColorStop(
+                0.62,
+                "rgba(0,0,0,0.68)"
+            );
+
+
+            degradado.addColorStop(
+                0.75,
+                "rgba(0,0,0,0.82)"
+            );
+
+
+            degradado.addColorStop(
+                0.88,
+                "rgba(0,0,0,0.93)"
+            );
+
+
+            degradado.addColorStop(
+                0.95,
+                "rgba(0,0,0,0.98)"
+            );
+
+
+            degradado.addColorStop(
+                1,
+                "#000000"
+            );
+
+
+            /* ===============================================
+               APLICAR DEGRADADO
+            =============================================== */
+
+            ctx.fillStyle =
+                degradado;
+
+
+            ctx.fillRect(
+                0,
+                inicio,
+                ancho,
+                alturaDegradado
+            );
+
+
+            /* ===============================================
+               CREAR PNG
+            =============================================== */
+
+            canvas.toBlob(
+                function(blob) {
+
+                    if (!blob) {
+
+                        alert(
+                            "No se pudo crear el PNG."
+                        );
+
+                        return;
+
+                    }
+
+
+                    const url =
+                        URL.createObjectURL(
+                            blob
+                        );
+
+
+                    const enlace =
+                        document.createElement(
+                            "a"
+                        );
+
+
+                    enlace.href =
+                        url;
+
+
+                    enlace.download =
+                        "desvanecido-1080x1350.png";
+
+
+                    document.body.appendChild(
+                        enlace
+                    );
+
+
+                    enlace.click();
+
+
+                    document.body.removeChild(
+                        enlace
+                    );
+
+
+                    setTimeout(
+                        function() {
+
+                            URL.revokeObjectURL(
+                                url
+                            );
+
+                        },
+                        1500
+                    );
+
+
+                    document.getElementById(
+                        "estado"
+                    ).innerText =
+                        "✅ PNG descargado · 1080 × 1350";
+
+                },
+
+                "image/png"
+            );
+
+        };
+
+
+    imagen.onerror =
+        function() {
+
+            alert(
+                "No se pudo procesar la imagen."
+            );
+
+        };
+
+
+    imagen.src =
+        imagenCargada;
+
+}
+
+
+/* =========================================================
+   REGRESAR AL MENÚ PRINCIPAL
+========================================================= */
+
+function regresarMenu() {
+
+    window.location.href =
+        "index.html";
+
+}
+
+</script>
+
+</body>
+
+</html>

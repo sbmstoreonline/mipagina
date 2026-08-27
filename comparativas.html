@@ -1,0 +1,2475 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Generador de Versus ⚽</title>
+
+<style>
+
+/* =====================================================
+   GENERAL
+===================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #0b1120;
+    color: white;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+header {
+    background: #111827;
+    padding: 18px 24px;
+    border-bottom: 1px solid #263244;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 23px;
+}
+
+header p {
+    margin: 5px 0 0;
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   LAYOUT
+===================================================== */
+
+.container {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    min-height: calc(100vh - 80px);
+}
+
+
+/* =====================================================
+   PANEL
+===================================================== */
+
+.panel {
+    background: #151e30;
+    border-right: 1px solid #29364a;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.panel h2 {
+    font-size: 16px;
+    margin: 24px 0 10px;
+}
+
+.panel h2:first-child {
+    margin-top: 0;
+}
+
+
+/* =====================================================
+   LABELS
+===================================================== */
+
+label {
+    display: block;
+    font-size: 13px;
+    color: #cbd5e1;
+    margin-bottom: 6px;
+}
+
+
+/* =====================================================
+   INPUTS
+===================================================== */
+
+input[type="file"] {
+    width: 100%;
+    color: #cbd5e1;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 11px 12px;
+    border-radius: 8px;
+    border: 1px solid #334155;
+    background: #0f172a;
+    color: white;
+    outline: none;
+    margin-bottom: 12px;
+}
+
+input[type="text"]:focus {
+    border-color: #3b82f6;
+}
+
+input[type="range"] {
+    width: 100%;
+    margin: 7px 0 14px;
+    accent-color: #3b82f6;
+}
+
+input[type="color"] {
+    width: 100%;
+    height: 42px;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    background: #0f172a;
+    cursor: pointer;
+}
+
+
+/* =====================================================
+   CHECKBOX
+===================================================== */
+
+.option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    background: #0f172a;
+    border: 1px solid #253249;
+
+    padding: 11px;
+    border-radius: 9px;
+
+    margin-bottom: 8px;
+
+    cursor: pointer;
+}
+
+.option:hover {
+    background: #162033;
+}
+
+.option input {
+    width: 18px;
+    height: 18px;
+    accent-color: #2563eb;
+}
+
+
+/* =====================================================
+   BOTONES
+===================================================== */
+
+button {
+    width: 100%;
+    border: 0;
+    border-radius: 9px;
+    padding: 13px;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    margin-top: 9px;
+}
+
+
+/* =====================================================
+   EXPORTAR
+===================================================== */
+
+.export {
+    background: #22c55e;
+    color: white;
+}
+
+.export:hover {
+    background: #16a34a;
+}
+
+
+/* =====================================================
+   REINICIAR
+===================================================== */
+
+.reset {
+    background: #334155;
+    color: white;
+}
+
+.reset:hover {
+    background: #475569;
+}
+
+
+/* =====================================================
+   MENÚ PRINCIPAL
+===================================================== */
+
+.menu {
+    background: #2563eb;
+    color: white;
+}
+
+.menu:hover {
+    background: #1d4ed8;
+}
+
+
+/* =====================================================
+   PREVIEW
+===================================================== */
+
+.preview-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 30px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #1e293b,
+            #0b1120 70%
+        );
+
+    overflow: auto;
+}
+
+.canvas-wrapper {
+    width: min(75vw, 700px);
+}
+
+canvas {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    background: #222;
+
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.55);
+
+    border-radius: 2px;
+
+    touch-action: none;
+}
+
+
+/* =====================================================
+   INFO
+===================================================== */
+
+.info {
+    background: #0f172a;
+    border: 1px solid #26344a;
+
+    border-radius: 9px;
+
+    padding: 12px;
+
+    margin-top: 15px;
+
+    color: #94a3b8;
+
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.value {
+    float: right;
+    color: white;
+    font-weight: bold;
+}
+
+.hidden {
+    display: none;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width: 850px) {
+
+    .container {
+        grid-template-columns: 1fr;
+    }
+
+    .panel {
+        border-right: 0;
+        border-bottom: 1px solid #29364a;
+    }
+
+    .preview-area {
+        padding: 15px;
+    }
+
+    .canvas-wrapper {
+        width: 100%;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>⚽ Generador de Versus</h1>
+
+    <p>
+        Crea imágenes 4:5 para Facebook, Instagram, TikTok y otras redes
+    </p>
+
+</header>
+
+
+<div class="container">
+
+
+<!-- =====================================================
+     PANEL DE CONTROLES
+====================================================== -->
+
+<div class="panel">
+
+
+    <!-- IMAGEN -->
+
+    <h2>📸 Imagen principal</h2>
+
+    <label>
+        Sube tu imagen 4:5
+    </label>
+
+    <input
+        type="file"
+        id="mainImage"
+        accept="image/*"
+    >
+
+
+    <!-- ESCUDOS -->
+
+    <h2>🛡️ Escudos</h2>
+
+    <label class="option">
+
+        <input
+            type="checkbox"
+            id="enableShields"
+        >
+
+        <span>
+            Mostrar escudos
+        </span>
+
+    </label>
+
+
+    <div
+        id="shieldControls"
+        class="hidden"
+    >
+
+        <label>
+            Escudo izquierdo
+        </label>
+
+        <input
+            type="file"
+            id="leftShield"
+            accept="image/*"
+        >
+
+
+        <label>
+            Escudo derecho
+        </label>
+
+        <input
+            type="file"
+            id="rightShield"
+            accept="image/*"
+        >
+
+
+        <label>
+
+            Tamaño de escudos
+
+            <span
+                class="value"
+                id="shieldSizeValue"
+            >
+                400
+            </span>
+
+        </label>
+
+        <input
+            type="range"
+            id="shieldSize"
+            min="200"
+            max="600"
+            value="400"
+        >
+
+    </div>
+
+
+    <!-- REACCIONES -->
+
+    <h2>👍❤️ Reacciones</h2>
+
+
+    <label class="option">
+
+        <input
+            type="checkbox"
+            id="enableLike"
+            checked
+        >
+
+        <span>
+            👍 Me gusta
+        </span>
+
+    </label>
+
+
+    <label class="option">
+
+        <input
+            type="checkbox"
+            id="enableLove"
+            checked
+        >
+
+        <span>
+            ❤️ Me encanta
+        </span>
+
+    </label>
+
+
+    <label>
+
+        Tamaño de reacciones
+
+        <span
+            class="value"
+            id="reactionSizeValue"
+        >
+            Automático
+        </span>
+
+    </label>
+
+    <input
+        type="range"
+        id="reactionSize"
+        min="100"
+        max="230"
+        value="150"
+    >
+
+
+    <!-- DIFUMINADO -->
+
+    <h2>🌑 Difuminado inferior</h2>
+
+
+    <label class="option">
+
+        <input
+            type="checkbox"
+            id="enableGradient"
+            checked
+        >
+
+        <span>
+            Activar difuminado
+        </span>
+
+    </label>
+
+
+    <label>
+
+        Intensidad
+
+        <span
+            class="value"
+            id="gradientValue"
+        >
+            90%
+        </span>
+
+    </label>
+
+    <input
+        type="range"
+        id="gradientIntensity"
+        min="0"
+        max="100"
+        value="90"
+    >
+
+
+    <label>
+
+        Altura del difuminado
+
+        <span
+            class="value"
+            id="gradientHeightValue"
+        >
+            650
+        </span>
+
+    </label>
+
+    <input
+        type="range"
+        id="gradientHeight"
+        min="350"
+        max="900"
+        value="650"
+    >
+
+
+    <!-- TEXTO -->
+
+    <h2>📝 Texto inferior</h2>
+
+
+    <input
+        type="text"
+        id="bottomText"
+        value="¿Quién fue mejor 9?"
+        placeholder="Escribe tu pregunta..."
+    >
+
+
+    <label>
+
+        Tamaño del texto
+
+        <span
+            class="value"
+            id="textSizeValue"
+        >
+            58
+        </span>
+
+    </label>
+
+    <input
+        type="range"
+        id="textSize"
+        min="30"
+        max="90"
+        value="58"
+    >
+
+
+    <label>
+        Color del texto
+    </label>
+
+    <input
+        type="color"
+        id="textColor"
+        value="#ffffff"
+    >
+
+
+    <label class="option">
+
+        <input
+            type="checkbox"
+            id="textBackground"
+            checked
+        >
+
+        <span>
+            Fondo negro detrás del texto
+        </span>
+
+    </label>
+
+
+    <!-- =================================================
+         BOTONES
+    ================================================== -->
+
+    <button
+        class="export"
+        id="exportBtn"
+    >
+        💾 EXPORTAR PNG
+    </button>
+
+
+    <button
+        class="reset"
+        id="resetBtn"
+    >
+        🔄 REINICIAR
+    </button>
+
+
+    <!-- NUEVO BOTÓN -->
+
+    <button
+        class="menu"
+        id="menuBtn"
+    >
+        🏠 MENÚ PRINCIPAL
+    </button>
+
+
+    <div class="info">
+
+        <b>💡 Consejo</b>
+
+        <br><br>
+
+        Sube una imagen que ya tengas dividida
+        en dos partes.
+
+        <br><br>
+
+        Puedes arrastrar 👍 ❤️ y los escudos
+        directamente sobre la imagen.
+
+        <br><br>
+
+        El archivo final se exporta a
+        <b>1080 × 1350 px</b>.
+
+    </div>
+
+
+</div>
+
+
+<!-- =====================================================
+     PREVISUALIZACIÓN
+====================================================== -->
+
+<div class="preview-area">
+
+    <div class="canvas-wrapper">
+
+        <canvas
+            id="canvas"
+            width="1080"
+            height="1350"
+        ></canvas>
+
+    </div>
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+/* =====================================================
+   ELEMENTOS
+===================================================== */
+
+const canvas =
+    document.getElementById("canvas");
+
+const ctx =
+    canvas.getContext("2d");
+
+
+const mainImageInput =
+    document.getElementById("mainImage");
+
+const enableShields =
+    document.getElementById("enableShields");
+
+const shieldControls =
+    document.getElementById("shieldControls");
+
+const leftShieldInput =
+    document.getElementById("leftShield");
+
+const rightShieldInput =
+    document.getElementById("rightShield");
+
+const enableLike =
+    document.getElementById("enableLike");
+
+const enableLove =
+    document.getElementById("enableLove");
+
+const reactionSize =
+    document.getElementById("reactionSize");
+
+const reactionSizeValue =
+    document.getElementById("reactionSizeValue");
+
+const shieldSize =
+    document.getElementById("shieldSize");
+
+const shieldSizeValue =
+    document.getElementById("shieldSizeValue");
+
+const enableGradient =
+    document.getElementById("enableGradient");
+
+const gradientIntensity =
+    document.getElementById("gradientIntensity");
+
+const gradientValue =
+    document.getElementById("gradientValue");
+
+const gradientHeight =
+    document.getElementById("gradientHeight");
+
+const gradientHeightValue =
+    document.getElementById("gradientHeightValue");
+
+const bottomText =
+    document.getElementById("bottomText");
+
+const textSize =
+    document.getElementById("textSize");
+
+const textSizeValue =
+    document.getElementById("textSizeValue");
+
+const textColor =
+    document.getElementById("textColor");
+
+const textBackground =
+    document.getElementById("textBackground");
+
+const exportBtn =
+    document.getElementById("exportBtn");
+
+const resetBtn =
+    document.getElementById("resetBtn");
+
+const menuBtn =
+    document.getElementById("menuBtn");
+
+
+/* =====================================================
+   IMÁGENES
+===================================================== */
+
+let mainImage = null;
+
+let leftShield = null;
+
+let rightShield = null;
+
+
+/* =====================================================
+   POSICIONES
+===================================================== */
+
+let elements = {
+
+    leftShield: {
+        x: 270,
+        y: 1000,
+        size: 400
+    },
+
+    rightShield: {
+        x: 810,
+        y: 1000,
+        size: 400
+    },
+
+    like: {
+        x: 400,
+        y: 700
+    },
+
+    love: {
+        x: 700,
+        y: 700
+    }
+
+};
+
+
+/* =====================================================
+   CARGAR IMAGEN
+===================================================== */
+
+function loadImage(file, callback) {
+
+    if (!file) return;
+
+    const reader =
+        new FileReader();
+
+    reader.onload =
+        function(event) {
+
+            const img =
+                new Image();
+
+            img.onload =
+                function() {
+
+                    callback(img);
+
+                };
+
+            img.src =
+                event.target.result;
+
+        };
+
+    reader.readAsDataURL(file);
+
+}
+
+
+/* =====================================================
+   IMAGEN PRINCIPAL
+===================================================== */
+
+mainImageInput.addEventListener(
+    "change",
+    function() {
+
+        loadImage(
+            this.files[0],
+            function(img) {
+
+                mainImage = img;
+
+                draw();
+
+            }
+        );
+
+    }
+);
+
+
+/* =====================================================
+   ESCUDO IZQUIERDO
+===================================================== */
+
+leftShieldInput.addEventListener(
+    "change",
+    function() {
+
+        loadImage(
+            this.files[0],
+            function(img) {
+
+                leftShield = img;
+
+                elements.leftShield.size =
+                    Number(shieldSize.value);
+
+                draw();
+
+            }
+        );
+
+    }
+);
+
+
+/* =====================================================
+   ESCUDO DERECHO
+===================================================== */
+
+rightShieldInput.addEventListener(
+    "change",
+    function() {
+
+        loadImage(
+            this.files[0],
+            function(img) {
+
+                rightShield = img;
+
+                elements.rightShield.size =
+                    Number(shieldSize.value);
+
+                draw();
+
+            }
+        );
+
+    }
+);
+
+
+/* =====================================================
+   MOSTRAR ESCUDOS
+===================================================== */
+
+enableShields.addEventListener(
+    "change",
+    function() {
+
+        shieldControls.classList.toggle(
+            "hidden",
+            !this.checked
+        );
+
+        draw();
+
+    }
+);
+
+
+/* =====================================================
+   SLIDER ESCUDOS
+===================================================== */
+
+shieldSize.addEventListener(
+    "input",
+    function() {
+
+        const value =
+            Number(this.value);
+
+        shieldSizeValue.textContent =
+            value;
+
+        elements.leftShield.size =
+            value;
+
+        elements.rightShield.size =
+            value;
+
+        draw();
+
+    }
+);
+
+
+/* =====================================================
+   SLIDER REACCIONES
+===================================================== */
+
+reactionSize.addEventListener(
+    "input",
+    function() {
+
+        reactionSizeValue.textContent =
+            this.value;
+
+        draw();
+
+    }
+);
+
+
+/* =====================================================
+   SLIDER DIFUMINADO
+===================================================== */
+
+gradientIntensity.addEventListener(
+    "input",
+    function() {
+
+        gradientValue.textContent =
+            this.value + "%";
+
+        draw();
+
+    }
+);
+
+
+/* =====================================================
+   ALTURA DIFUMINADO
+===================================================== */
+
+gradientHeight.addEventListener(
+    "input",
+    function() {
+
+        gradientHeightValue.textContent =
+            this.value;
+
+        draw();
+
+    }
+);
+
+
+/* =====================================================
+   TAMAÑO TEXTO
+===================================================== */
+
+textSize.addEventListener(
+    "input",
+    function() {
+
+        textSizeValue.textContent =
+            this.value;
+
+        draw();
+
+    }
+);
+
+
+/* =====================================================
+   OTROS CONTROLES
+===================================================== */
+
+[
+    enableLike,
+    enableLove,
+    enableGradient,
+    bottomText,
+    textColor,
+    textBackground
+
+].forEach(
+    function(element) {
+
+        element.addEventListener(
+            "input",
+            draw
+        );
+
+        element.addEventListener(
+            "change",
+            draw
+        );
+
+    }
+);
+
+
+/* =====================================================
+   DIBUJAR IMAGEN PRINCIPAL
+===================================================== */
+
+function drawMainImage() {
+
+    if (!mainImage) {
+
+        ctx.fillStyle =
+            "#202938";
+
+        ctx.fillRect(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+
+        ctx.fillStyle =
+            "#64748b";
+
+        ctx.font =
+            "bold 36px Arial";
+
+        ctx.textAlign =
+            "center";
+
+        ctx.textBaseline =
+            "middle";
+
+        ctx.fillText(
+            "SUBE TU IMAGEN 4:5",
+            canvas.width / 2,
+            canvas.height / 2
+        );
+
+        return;
+    }
+
+
+    const targetRatio =
+        canvas.width /
+        canvas.height;
+
+
+    const imageRatio =
+        mainImage.width /
+        mainImage.height;
+
+
+    let sx = 0;
+
+    let sy = 0;
+
+    let sw =
+        mainImage.width;
+
+    let sh =
+        mainImage.height;
+
+
+    if (
+        imageRatio >
+        targetRatio
+    ) {
+
+        sw =
+            mainImage.height *
+            targetRatio;
+
+        sx =
+            (
+                mainImage.width -
+                sw
+            ) / 2;
+
+    } else {
+
+        sh =
+            mainImage.width /
+            targetRatio;
+
+        sy =
+            (
+                mainImage.height -
+                sh
+            ) / 2;
+
+    }
+
+
+    ctx.drawImage(
+
+        mainImage,
+
+        sx,
+        sy,
+        sw,
+        sh,
+
+        0,
+        0,
+        canvas.width,
+        canvas.height
+
+    );
+
+}
+
+
+/* =====================================================
+   DIFUMINADO NEGRO
+===================================================== */
+
+function drawBottomGradient() {
+
+    if (!enableGradient.checked) {
+        return;
+    }
+
+
+    const height =
+        Number(
+            gradientHeight.value
+        );
+
+
+    const intensity =
+        Number(
+            gradientIntensity.value
+        ) / 100;
+
+
+    const startY =
+        canvas.height -
+        height;
+
+
+    const gradient =
+        ctx.createLinearGradient(
+            0,
+            canvas.height,
+            0,
+            startY
+        );
+
+
+    gradient.addColorStop(
+        0,
+        `rgba(0,0,0,${0.98 * intensity})`
+    );
+
+
+    gradient.addColorStop(
+        0.25,
+        `rgba(0,0,0,${0.88 * intensity})`
+    );
+
+
+    gradient.addColorStop(
+        0.50,
+        `rgba(0,0,0,${0.62 * intensity})`
+    );
+
+
+    gradient.addColorStop(
+        0.72,
+        `rgba(0,0,0,${0.32 * intensity})`
+    );
+
+
+    gradient.addColorStop(
+        0.88,
+        `rgba(0,0,0,${0.10 * intensity})`
+    );
+
+
+    gradient.addColorStop(
+        1,
+        "rgba(0,0,0,0)"
+    );
+
+
+    ctx.save();
+
+    ctx.fillStyle =
+        gradient;
+
+    ctx.fillRect(
+        0,
+        startY,
+        canvas.width,
+        height
+    );
+
+    ctx.restore();
+
+}
+
+
+/* =====================================================
+   ESCUDOS
+===================================================== */
+
+function drawShield(
+    img,
+    element
+) {
+
+    if (!img) return;
+
+
+    const size =
+        element.size;
+
+
+    const ratio =
+        img.width /
+        img.height;
+
+
+    let w;
+
+    let h;
+
+
+    if (ratio >= 1) {
+
+        w = size;
+
+        h =
+            size /
+            ratio;
+
+    } else {
+
+        h = size;
+
+        w =
+            size *
+            ratio;
+
+    }
+
+
+    ctx.save();
+
+
+    ctx.shadowColor =
+        "rgba(0,0,0,.65)";
+
+    ctx.shadowBlur = 18;
+
+    ctx.shadowOffsetY = 7;
+
+
+    ctx.drawImage(
+
+        img,
+
+        element.x - w / 2,
+
+        element.y - h / 2,
+
+        w,
+        h
+
+    );
+
+
+    ctx.restore();
+
+}
+
+
+/* =====================================================
+   ICONO LIKE
+===================================================== */
+
+function drawLikeIcon(
+    x,
+    y,
+    size
+) {
+
+    const s =
+        size / 190;
+
+
+    ctx.save();
+
+
+    ctx.fillStyle =
+        "#ffffff";
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x - 22 * s,
+        y + 35 * s
+    );
+
+    ctx.lineTo(
+        x - 22 * s,
+        y - 5 * s
+    );
+
+    ctx.lineTo(
+        x - 3 * s,
+        y - 5 * s
+    );
+
+    ctx.lineTo(
+        x + 12 * s,
+        y - 45 * s
+    );
+
+    ctx.quadraticCurveTo(
+        x + 22 * s,
+        y - 58 * s,
+        x + 31 * s,
+        y - 49 * s
+    );
+
+    ctx.quadraticCurveTo(
+        x + 38 * s,
+        y - 42 * s,
+        x + 33 * s,
+        y - 25 * s
+    );
+
+    ctx.lineTo(
+        x + 27 * s,
+        y - 8 * s
+    );
+
+    ctx.lineTo(
+        x + 54 * s,
+        y - 8 * s
+    );
+
+    ctx.quadraticCurveTo(
+        x + 66 * s,
+        y - 8 * s,
+        x + 67 * s,
+        y + 4 * s
+    );
+
+    ctx.lineTo(
+        x + 63 * s,
+        y + 37 * s
+    );
+
+    ctx.quadraticCurveTo(
+        x + 62 * s,
+        y + 48 * s,
+        x + 51 * s,
+        y + 48 * s
+    );
+
+    ctx.lineTo(
+        x - 3 * s,
+        y + 48 * s
+    );
+
+    ctx.lineTo(
+        x - 22 * s,
+        y + 35 * s
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    ctx.beginPath();
+
+    ctx.roundRect(
+        x - 55 * s,
+        y - 5 * s,
+        30 * s,
+        65 * s,
+        8 * s
+    );
+
+    ctx.fill();
+
+
+    ctx.restore();
+
+}
+
+
+/* =====================================================
+   ICONO CORAZÓN
+===================================================== */
+
+function drawHeartIcon(
+    x,
+    y,
+    size
+) {
+
+    const s =
+        size / 190;
+
+
+    ctx.save();
+
+    ctx.fillStyle =
+        "#ffffff";
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x,
+        y + 45 * s
+    );
+
+
+    ctx.bezierCurveTo(
+        x - 15 * s,
+        y + 30 * s,
+        x - 60 * s,
+        y + 2 * s,
+        x - 60 * s,
+        y - 27 * s
+    );
+
+
+    ctx.bezierCurveTo(
+        x - 60 * s,
+        y - 54 * s,
+        x - 28 * s,
+        y - 67 * s,
+        x - 8 * s,
+        y - 47 * s
+    );
+
+
+    ctx.bezierCurveTo(
+        x - 2 * s,
+        y - 41 * s,
+        x,
+        y - 34 * s,
+        x,
+        y - 30 * s
+    );
+
+
+    ctx.bezierCurveTo(
+        x,
+        y - 34 * s,
+        x + 2 * s,
+        y - 41 * s,
+        x + 8 * s,
+        y - 47 * s
+    );
+
+
+    ctx.bezierCurveTo(
+        x + 28 * s,
+        y - 67 * s,
+        x + 60 * s,
+        y - 54 * s,
+        x + 60 * s,
+        y - 27 * s
+    );
+
+
+    ctx.bezierCurveTo(
+        x + 60 * s,
+        y + 2 * s,
+        x + 15 * s,
+        y + 30 * s,
+        x,
+        y + 45 * s
+    );
+
+
+    ctx.closePath();
+
+    ctx.fill();
+
+    ctx.restore();
+
+}
+
+
+/* =====================================================
+   REACCIONES
+===================================================== */
+
+function drawReaction(
+    x,
+    y,
+    size,
+    type
+) {
+
+    const radius =
+        size / 2;
+
+
+    ctx.save();
+
+
+    ctx.shadowColor =
+        "rgba(0,0,0,.55)";
+
+    ctx.shadowBlur =
+        18;
+
+    ctx.shadowOffsetY =
+        7;
+
+
+    let gradient;
+
+
+    if (type === "like") {
+
+        gradient =
+            ctx.createRadialGradient(
+
+                x - size * .25,
+                y - size * .30,
+                2,
+
+                x,
+                y,
+                radius
+
+            );
+
+
+        gradient.addColorStop(
+            0,
+            "#4db5ff"
+        );
+
+        gradient.addColorStop(
+            .55,
+            "#2196f3"
+        );
+
+        gradient.addColorStop(
+            1,
+            "#0866d1"
+        );
+
+    } else {
+
+        gradient =
+            ctx.createRadialGradient(
+
+                x - size * .25,
+                y - size * .30,
+                2,
+
+                x,
+                y,
+                radius
+
+            );
+
+
+        gradient.addColorStop(
+            0,
+            "#ff6b8b"
+        );
+
+        gradient.addColorStop(
+            .55,
+            "#f43f67"
+        );
+
+        gradient.addColorStop(
+            1,
+            "#d7194f"
+        );
+
+    }
+
+
+    ctx.fillStyle =
+        gradient;
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        x,
+        y,
+        radius,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    ctx.shadowColor =
+        "transparent";
+
+
+    if (type === "like") {
+
+        drawLikeIcon(
+            x,
+            y,
+            size
+        );
+
+    } else {
+
+        drawHeartIcon(
+            x,
+            y,
+            size
+        );
+
+    }
+
+
+    ctx.restore();
+
+}
+
+
+/* =====================================================
+   TEXTO INFERIOR
+===================================================== */
+
+function drawText() {
+
+    const text =
+        bottomText.value.trim();
+
+
+    if (!text) return;
+
+
+    let fontSize =
+        Number(
+            textSize.value
+        );
+
+
+    const x =
+        canvas.width / 2;
+
+
+    const y =
+        1270;
+
+
+    const maxWidth =
+        960;
+
+
+    ctx.font =
+        `italic bold ${fontSize}px Arial`;
+
+
+    while (
+        ctx.measureText(text).width >
+        maxWidth &&
+        fontSize > 25
+    ) {
+
+        fontSize--;
+
+        ctx.font =
+            `italic bold ${fontSize}px Arial`;
+
+    }
+
+
+    const textWidth =
+        ctx.measureText(text).width;
+
+
+    if (textBackground.checked) {
+
+        const paddingX = 45;
+
+        const paddingY = 30;
+
+
+        ctx.fillStyle =
+            "rgba(0,0,0,.88)";
+
+
+        ctx.fillRect(
+
+            x -
+            textWidth / 2 -
+            paddingX,
+
+            y -
+            fontSize / 2 -
+            paddingY,
+
+            textWidth +
+            paddingX * 2,
+
+            fontSize +
+            paddingY * 2
+
+        );
+
+    }
+
+
+    ctx.shadowColor =
+        "rgba(0,0,0,.85)";
+
+    ctx.shadowBlur =
+        7;
+
+    ctx.shadowOffsetY =
+        4;
+
+
+    ctx.fillStyle =
+        textColor.value;
+
+
+    ctx.textAlign =
+        "center";
+
+    ctx.textBaseline =
+        "middle";
+
+
+    ctx.fillText(
+        text,
+        x,
+        y
+    );
+
+
+    ctx.shadowColor =
+        "transparent";
+
+}
+
+
+/* =====================================================
+   DIBUJAR TODO
+===================================================== */
+
+function draw() {
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    /*
+       1. Imagen
+    */
+
+    drawMainImage();
+
+
+    /*
+       2. Difuminado
+    */
+
+    drawBottomGradient();
+
+
+    /*
+       3. Reacciones
+    */
+
+    let size =
+        Number(
+            reactionSize.value
+        );
+
+
+    if (enableShields.checked) {
+
+        size =
+            Math.min(
+                size,
+                150
+            );
+
+    }
+
+
+    if (enableLike.checked) {
+
+        drawReaction(
+            elements.like.x,
+            elements.like.y,
+            size,
+            "like"
+        );
+
+    }
+
+
+    if (enableLove.checked) {
+
+        drawReaction(
+            elements.love.x,
+            elements.love.y,
+            size,
+            "love"
+        );
+
+    }
+
+
+    /*
+       4. Escudos
+    */
+
+    if (enableShields.checked) {
+
+        drawShield(
+            leftShield,
+            elements.leftShield
+        );
+
+
+        drawShield(
+            rightShield,
+            elements.rightShield
+        );
+
+    }
+
+
+    /*
+       5. Texto
+    */
+
+    drawText();
+
+}
+
+
+/* =====================================================
+   ARRASTRAR ELEMENTOS
+===================================================== */
+
+let dragging = null;
+
+let dragOffsetX = 0;
+
+let dragOffsetY = 0;
+
+
+function getCanvasPosition(event) {
+
+    const rect =
+        canvas.getBoundingClientRect();
+
+
+    const scaleX =
+        canvas.width /
+        rect.width;
+
+
+    const scaleY =
+        canvas.height /
+        rect.height;
+
+
+    return {
+
+        x:
+            (event.clientX -
+            rect.left) *
+            scaleX,
+
+        y:
+            (event.clientY -
+            rect.top) *
+            scaleY
+
+    };
+
+}
+
+
+function distance(
+    x1,
+    y1,
+    x2,
+    y2
+) {
+
+    return Math.sqrt(
+
+        Math.pow(
+            x1 - x2,
+            2
+        )
+
+        +
+
+        Math.pow(
+            y1 - y2,
+            2
+        )
+
+    );
+
+}
+
+
+/* =====================================================
+   CLICK / TOUCH
+===================================================== */
+
+canvas.addEventListener(
+    "pointerdown",
+    function(event) {
+
+        const pos =
+            getCanvasPosition(event);
+
+
+        let size =
+            Number(
+                reactionSize.value
+            );
+
+
+        if (enableShields.checked) {
+
+            size =
+                Math.min(
+                    size,
+                    150
+                );
+
+        }
+
+
+        /*
+           LIKE
+        */
+
+        if (
+            enableLike.checked &&
+            distance(
+                pos.x,
+                pos.y,
+                elements.like.x,
+                elements.like.y
+            ) <
+            size / 2
+        ) {
+
+            dragging =
+                elements.like;
+
+            dragOffsetX =
+                pos.x -
+                elements.like.x;
+
+            dragOffsetY =
+                pos.y -
+                elements.like.y;
+
+            canvas.setPointerCapture(
+                event.pointerId
+            );
+
+            return;
+
+        }
+
+
+        /*
+           LOVE
+        */
+
+        if (
+            enableLove.checked &&
+            distance(
+                pos.x,
+                pos.y,
+                elements.love.x,
+                elements.love.y
+            ) <
+            size / 2
+        ) {
+
+            dragging =
+                elements.love;
+
+            dragOffsetX =
+                pos.x -
+                elements.love.x;
+
+            dragOffsetY =
+                pos.y -
+                elements.love.y;
+
+            canvas.setPointerCapture(
+                event.pointerId
+            );
+
+            return;
+
+        }
+
+
+        /*
+           ESCUDO IZQUIERDO
+        */
+
+        if (
+            enableShields.checked &&
+            leftShield
+        ) {
+
+            if (
+                distance(
+                    pos.x,
+                    pos.y,
+                    elements.leftShield.x,
+                    elements.leftShield.y
+                ) <
+                elements.leftShield.size
+            ) {
+
+                dragging =
+                    elements.leftShield;
+
+                dragOffsetX =
+                    pos.x -
+                    elements.leftShield.x;
+
+                dragOffsetY =
+                    pos.y -
+                    elements.leftShield.y;
+
+                canvas.setPointerCapture(
+                    event.pointerId
+                );
+
+                return;
+
+            }
+
+        }
+
+
+        /*
+           ESCUDO DERECHO
+        */
+
+        if (
+            enableShields.checked &&
+            rightShield
+        ) {
+
+            if (
+                distance(
+                    pos.x,
+                    pos.y,
+                    elements.rightShield.x,
+                    elements.rightShield.y
+                ) <
+                elements.rightShield.size
+            ) {
+
+                dragging =
+                    elements.rightShield;
+
+                dragOffsetX =
+                    pos.x -
+                    elements.rightShield.x;
+
+                dragOffsetY =
+                    pos.y -
+                    elements.rightShield.y;
+
+                canvas.setPointerCapture(
+                    event.pointerId
+                );
+
+                return;
+
+            }
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   MOVER
+===================================================== */
+
+canvas.addEventListener(
+    "pointermove",
+    function(event) {
+
+        if (!dragging) return;
+
+
+        const pos =
+            getCanvasPosition(event);
+
+
+        dragging.x =
+            pos.x -
+            dragOffsetX;
+
+
+        dragging.y =
+            pos.y -
+            dragOffsetY;
+
+
+        draw();
+
+    }
+);
+
+
+/* =====================================================
+   SOLTAR
+===================================================== */
+
+canvas.addEventListener(
+    "pointerup",
+    function() {
+
+        dragging = null;
+
+    }
+);
+
+
+canvas.addEventListener(
+    "pointercancel",
+    function() {
+
+        dragging = null;
+
+    }
+);
+
+
+/* =====================================================
+   EXPORTAR
+===================================================== */
+
+exportBtn.addEventListener(
+    "click",
+    function() {
+
+        if (!mainImage) {
+
+            alert(
+                "Primero sube tu imagen 4:5."
+            );
+
+            return;
+
+        }
+
+
+        canvas.toBlob(
+            function(blob) {
+
+                const url =
+                    URL.createObjectURL(
+                        blob
+                    );
+
+
+                const link =
+                    document.createElement(
+                        "a"
+                    );
+
+
+                link.href =
+                    url;
+
+
+                link.download =
+                    "versus-futbol-1080x1350.png";
+
+
+                document.body.appendChild(
+                    link
+                );
+
+
+                link.click();
+
+
+                link.remove();
+
+
+                setTimeout(
+                    function() {
+
+                        URL.revokeObjectURL(
+                            url
+                        );
+
+                    },
+                    1000
+                );
+
+            },
+            "image/png",
+            1
+        );
+
+    }
+);
+
+
+/* =====================================================
+   REINICIAR
+===================================================== */
+
+resetBtn.addEventListener(
+    "click",
+    function() {
+
+        mainImage = null;
+
+        leftShield = null;
+
+        rightShield = null;
+
+
+        mainImageInput.value = "";
+
+        leftShieldInput.value = "";
+
+        rightShieldInput.value = "";
+
+
+        enableShields.checked =
+            false;
+
+        enableLike.checked =
+            true;
+
+        enableLove.checked =
+            true;
+
+
+        enableGradient.checked =
+            true;
+
+
+        bottomText.value =
+            "¿Quién fue mejor 9?";
+
+
+        textSize.value =
+            58;
+
+        textSizeValue.textContent =
+            "58";
+
+
+        textColor.value =
+            "#ffffff";
+
+
+        textBackground.checked =
+            true;
+
+
+        reactionSize.value =
+            150;
+
+        reactionSizeValue.textContent =
+            "150";
+
+
+        shieldSize.value =
+            400;
+
+        shieldSizeValue.textContent =
+            "400";
+
+
+        gradientIntensity.value =
+            90;
+
+        gradientValue.textContent =
+            "90%";
+
+
+        gradientHeight.value =
+            650;
+
+        gradientHeightValue.textContent =
+            "650";
+
+
+        shieldControls.classList.add(
+            "hidden"
+        );
+
+
+        elements.leftShield = {
+
+            x: 270,
+
+            y: 1000,
+
+            size: 400
+
+        };
+
+
+        elements.rightShield = {
+
+            x: 810,
+
+            y: 1000,
+
+            size: 400
+
+        };
+
+
+        elements.like = {
+
+            x: 400,
+
+            y: 700
+
+        };
+
+
+        elements.love = {
+
+            x: 700,
+
+            y: 700
+
+        };
+
+
+        draw();
+
+    }
+);
+
+
+/* =====================================================
+   REGRESAR AL MENÚ PRINCIPAL
+===================================================== */
+
+menuBtn.addEventListener(
+    "click",
+    function() {
+
+        window.location.href =
+            "index.html";
+
+    }
+);
+
+
+/* =====================================================
+   INICIAR
+===================================================== */
+
+draw();
+
+</script>
+
+</body>
+</html>
